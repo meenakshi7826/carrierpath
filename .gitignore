@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+carrierpath.sqlite3
+carrierpath.sqlite3-shm
+carrierpath.sqlite3-wal

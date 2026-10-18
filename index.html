@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarrierPath - Study & Career Guidance</title>
+
+<style>
+:root {
+    --primary: #c34f78;
+    --secondary: #e8799a;
+    --dark: #402638;
+    --light: #fff6f8;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    scroll-behavior: smooth;
+}
+
+html {
+    scroll-padding-top: 24px;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 5% 5%, #ffe6ee 0, transparent 32rem),
+        var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    min-width: 320px;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 15px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 18px #63354a10;
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-color: #f0b9cb;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+nav a,
+button {
+    transition: color 0.2s, background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+nav a:hover {
+    color: var(--primary);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-weight: bold;
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 6px 16px #c34f7828;
+    max-width: 100%;
+}
+
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+button:hover {
+    background: #a93d65;
+    transform: translateY(-2px);
+    box-shadow: 0 9px 20px #c34f7838;
+}
+
+button:focus-visible,
+a:focus-visible,
+.path-card:focus-visible {
+    outline: 3px solid #e8799a;
+    outline-offset: 3px;
+}
+
+.hero {
+    padding: 90px 7%;
+    background: linear-gradient(135deg, #ffe8ef, #fff1e9 58%, #fae5ef);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.hero-content {
+    flex: 1 1 350px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.045em;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+.hero p {
+    font-size: 18px;
+    color: #725967;
+    margin-bottom: 25px;
+}
+
+.hero-visual {
+    flex: 1 1 280px;
+    max-width: 430px;
+    margin: auto;
+    padding: 35px;
+    border-radius: 25px;
+    background: white;
+    box-shadow: 0 18px 50px #a93d651c;
+    border: 1px solid #ffffffb8;
+    text-align: center;
+}
+
+.hero-visual .emoji {
+    font-size: 100px;
+}
+
+.hero-visual h3 {
+    margin: 12px 0;
+    color: var(--primary);
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 25px 7%;
+    background: #ffffffd9;
+    border-top: 1px solid #f7e4eb;
+    border-bottom: 1px solid #f7e4eb;
+    flex-wrap: wrap;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    color: var(--primary);
+    font-size: 24px;
+}
+
+section {
+    padding: 70px 7%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    font-size: 34px;
+    margin-bottom: 10px;
+    letter-spacing: -0.03em;
+}
+
+.section-heading p {
+    color: #725967;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: 22px;
+}
+
+.card {
+    min-width: 0;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px #63354a0a;
+    border: 1px solid #f4e3e9;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px #c34f781c;
+    border-color: #edc3d1;
+}
+
+.card .icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #725967;
+    margin-bottom: 15px;
+}
+
+.card button {
+    margin-top: 5px;
+}
+
+.path-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 0 auto 28px;
+    max-width: 760px;
+}
+
+.path-card {
+    background: white;
+    border: 1px solid #f1dfe6;
+    border-radius: 16px;
+    padding: 20px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 5px 18px rgba(99, 53, 74, 0.05);
+}
+
+.path-card:hover,
+.path-card.selected {
+    border-color: var(--primary);
+    background: #fff0f4;
+    transform: translateY(-3px);
+}
+
+.path-card .emoji {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.path-card h4 {
+    margin-bottom: 5px;
+}
+
+.path-card small {
+    color: #725967;
+}
+
+.advisor-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 22px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.advisor-panel,
+.advisor-output {
+    min-width: 0;
+    background: white;
+    border: 1px solid #f1dfe6;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(99, 53, 74, 0.06);
+}
+
+.ai-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 16px;
+}
+
+.ai-chip {
+    border: 1px solid #f0d4df;
+    background: #fff5f7;
+    color: var(--primary);
+    border-radius: 999px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 260px;
+}
+
+.bubble {
+    padding: 14px 16px;
+    border-radius: 16px;
+    max-width: 90%;
+    line-height: 1.6;
+    font-size: 0.96rem;
+    overflow-wrap: anywhere;
+}
+
+.bubble.assistant {
+    background: #fff5f7;
+    color: var(--dark);
+    border: 1px solid #f2dce4;
+    align-self: flex-start;
+}
+
+.bubble.user {
+    background: var(--primary);
+    color: white;
+    align-self: flex-end;
+}
+
+.advice-list {
+    margin-top: 12px;
+    padding-left: 18px;
+    color: #725967;
+    line-height: 1.8;
+}
+
+#career {
+    background: white;
+}
+
+.form-container {
+    max-width: 750px;
+    margin: auto;
+    background: var(--light);
+    border-radius: 18px;
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+select, input, textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ead6de;
+    border-radius: 8px;
+    font-size: 15px;
+    background: white;
+    color: var(--dark);
+}
+
+select:focus, input:focus, textarea:focus {
+    outline: 2px solid #f0b9cb;
+    border-color: var(--primary);
+}
+
+.result {
+    margin-top: 25px;
+    display: none;
+}
+
+.result-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border-left: 5px solid var(--secondary);
+}
+
+.result-card h3 {
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #ffedf2;
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 12px;
+    margin: 5px 3px 5px 0;
+}
+
+.planner {
+    max-width: 750px;
+    margin: auto;
+}
+
+.task {
+    background: white;
+    padding: 15px;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.task input {
+    width: auto;
+}
+
+.task label {
+    margin: 0;
+    font-weight: normal;
+}
+
+.task input:checked + label {
+    text-decoration: line-through;
+    color: #777;
+}
+
+.progress-bar {
+    background: #f4dfe6;
+    border-radius: 20px;
+    height: 12px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress-fill {
+    background: var(--secondary);
+    height: 100%;
+    width: 0;
+    transition: 0.3s;
+}
+
+.cta {
+    background: linear-gradient(135deg, #c34f78, #e8799a 62%, #ef9b99);
+    color: white;
+    text-align: center;
+    padding: 55px 7%;
+}
+
+.cta h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.cta p {
+    margin-bottom: 20px;
+}
+
+.cta button {
+    background: white;
+    color: var(--primary);
+}
+
+footer {
+    background: #402638;
+    color: white;
+    text-align: center;
+    padding: 30px 7%;
+}
+
+footer p {
+    color: #f0dce5;
+    margin-top: 8px;
+}
+
+#languageBtn {
+    background: var(--primary);
+    padding: 9px 13px;
+}
+
+.roadmap {
+    background: linear-gradient(180deg, #fff0f4, #fff8fa);
+}
+
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: 18px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.roadmap-step {
+    background: white;
+    border: 1px solid #f1dfe6;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 8px 24px #63354a0a;
+}
+
+.roadmap-step .step-number {
+    display: inline-grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    background: #ffedf2;
+    color: var(--primary);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.roadmap-step h3 {
+    margin-bottom: 8px;
+}
+
+.roadmap-step p,
+.roadmap-note {
+    color: #725967;
+}
+
+.roadmap-note {
+    max-width: 850px;
+    margin: 24px auto 0;
+    padding: 18px 22px;
+    border-left: 4px solid var(--secondary);
+    border-radius: 0 12px 12px 0;
+    background: white;
+}
+
+@media (max-width: 900px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .advisor-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    header {
+        justify-content: center;
+        padding: 14px 5%;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 8px 14px;
+        width: 100%;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .hero {
+        padding: 52px 6%;
+        text-align: center;
+    }
+
+    section {
+        padding: 48px 6%;
+    }
+
+    .section-heading h2 {
+        font-size: clamp(24px, 7vw, 28px);
+    }
+
+    .form-container {
+        padding: 18px;
+    }
+
+    .hero h1 {
+        font-size: clamp(32px, 10vw, 44px);
+        letter-spacing: -0.03em;
+    }
+
+    .hero-content,
+    .hero-visual {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    .hero-visual {
+        padding: 24px 18px;
+    }
+
+    .hero-visual .emoji {
+        font-size: clamp(58px, 18vw, 82px);
+    }
+
+    .stats {
+        gap: 18px 26px;
+        padding: 22px 6%;
+    }
+
+    .advisor-panel,
+    .advisor-output {
+        padding: 18px;
+    }
+
+    .path-picker {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .path-card {
+        padding: 16px 10px;
+    }
+
+    .bubble {
+        max-width: 100%;
+    }
+
+    .cta {
+        padding: 44px 6%;
+    }
+
+    .cta h2 {
+        font-size: clamp(24px, 7vw, 32px);
+    }
+
+    .roadmap-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .roadmap-step {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .path-picker {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .path-card {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        text-align: left;
+    }
+
+    .path-card .emoji {
+        margin: 0;
+        font-size: 32px;
+    }
+
+    .hero button {
+        width: 100%;
+        margin: 0 0 10px !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CarrierPath</div>
+
+    <nav>
+        <a href="#home" data-en="Home" data-hi="होम">Home</a>
+        <a href="#features" data-en="Features" data-hi="सुविधाएँ">Features</a>
+        <a href="#roadmap" data-en="Roadmap" data-hi="रोडमैप">Roadmap</a>
+        <a href="#career" data-en="Career Finder" data-hi="करियर खोजें">Career Finder</a>
+        <a href="#study" data-en="Study Planner" data-hi="स्टडी प्लानर">Study Planner</a>
+        <a href="#income" data-en="Earn" data-hi="कमाई">Earn</a>
+        <button id="languageBtn" onclick="toggleLanguage()">हिंदी</button>
+    </nav>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1 data-en="Confused About Your <span>Future?</span>"
+            data-hi="अपने <span>भविष्य</span> को लेकर परेशान हैं?">
+            Confused About Your <span>Future?</span>
+        </h1>
+
+        <p data-en="Discover your strengths, find the right career, learn new skills, and build your future with a personalized roadmap."
+           data-hi="अपनी खूबियाँ पहचानें, सही करियर चुनें, नई स्किल्स सीखें और अपने भविष्य का रास्ता बनाएँ।">
+           Discover your strengths, find the right career, learn new skills, and build your future with a personalized roadmap.
+        </p>
+
+        <button onclick="document.getElementById('career').scrollIntoView()"
+                data-en="Find My Career →" data-hi="मेरा करियर खोजें →">
+            Find My Career →
+        </button>
+
+        <button onclick="document.getElementById('features').scrollIntoView()"
+                style="background:white;color:#c34f78;margin-left:8px"
+                data-en="Explore Features" data-hi="फीचर्स देखें">
+            Explore Features
+        </button>
+    </div>
+
+    <div class="hero-visual">
+        <div class="emoji">🎓 💡</div>
+        <h3 data-en="Your Future Starts Here"
+            data-hi="आपका भविष्य यहाँ से शुरू होता है">
+            Your Future Starts Here
+        </h3>
+        <p data-en="One step today. A better future tomorrow."
+           data-hi="आज एक कदम। कल बेहतर भविष्य।">
+           One step today. A better future tomorrow.
+        </p>
+    </div>
+</section>
+
+<div class="stats">
+    <div class="stat">
+        <strong>🎯</strong>
+        <span data-en="Discover Careers" data-hi="करियर खोजें">Discover Careers</span>
+    </div>
+    <div class="stat">
+        <strong>📚</strong>
+        <span data-en="Learn Skills" data-hi="स्किल्स सीखें">Learn Skills</span>
+    </div>
+    <div class="stat">
+        <strong>💰</strong>
+        <span data-en="Explore Income" data-hi="कमाई के तरीके">Explore Income</span>
+    </div>
+</div>
+
+<section id="features">
+    <div class="section-heading">
+        <h2 data-en="Everything You Need to Succeed"
+            data-hi="सफलता के लिए सब कुछ">
+            Everything You Need to Succeed
+        </h2>
+        <p data-en="Your personal guide to education, career, and skills."
+           data-hi="पढ़ाई, करियर और स्किल्स के लिए आपका गाइड।">
+           Your personal guide to education, career, and skills.
+        </p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">🎯</div>
+            <h3 data-en="AI Career Finder" data-hi="AI करियर फाइंडर">AI Career Finder</h3>
+            <p data-en="Explore career options based on your interests, education, and preferences."
+               data-hi="अपनी रुचि, पढ़ाई और पसंद के अनुसार करियर विकल्प खोजें।">
+               Explore career options based on your interests, education, and preferences.
+            </p>
+            <button onclick="document.getElementById('career').scrollIntoView()"
+                    data-en="Explore Careers" data-hi="करियर खोजें">Explore Careers</button>
+        </div>
+
+        <div class="card">
+            <div class="icon">📖</div>
+            <h3 data-en="Study Planner" data-hi="स्टडी प्लानर">Study Planner</h3>
+            <p data-en="Create a study routine, set goals, and track completed tasks."
+               data-hi="पढ़ाई का टाइमटेबल बनाएँ और अपने टास्क पूरे करें।">
+               Create a study routine, set goals, and track completed tasks.
+            </p>
+            <button onclick="document.getElementById('study').scrollIntoView()"
+                    data-en="Plan My Study" data-hi="पढ़ाई प्लान करें">Plan My Study</button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧠</div>
+            <h3 data-en="Skill Development" data-hi="स्किल डेवलपमेंट">Skill Development</h3>
+            <p data-en="Start learning useful skills even if you are a complete beginner."
+               data-hi="अगर आप बिल्कुल नए हैं, तब भी उपयोगी स्किल्स सीखना शुरू करें।">
+               Start learning useful skills even if you are a complete beginner.
+            </p>
+            <button onclick="showSkills()"
+                    data-en="Explore Skills" data-hi="स्किल्स देखें">Explore Skills</button>
+        </div>
+
+        <div class="card">
+            <div class="icon">💸</div>
+            <h3 data-en="Income Guide" data-hi="कमाई गाइड">Income Guide</h3>
+            <p data-en="Discover ways to build skills and explore legitimate earning opportunities."
+               data-hi="स्किल्स सीखें और सही तरीके से कमाई के अवसर खोजें।">
+               Discover ways to build skills and explore legitimate earning opportunities.
+            </p>
+            <button onclick="document.getElementById('income').scrollIntoView()"
+                    data-en="Explore Income" data-hi="कमाई के तरीके">Explore Income</button>
+        </div>
+    </div>
+</section>
+
+<section class="roadmap" id="roadmap">
+    <div class="section-heading">
+        <h2 data-en="A simple roadmap from interest to opportunity"
+            data-hi="रुचि से अवसर तक का आसान रोडमैप">
+            A simple roadmap from interest to opportunity
+        </h2>
+        <p data-en="You do not need to have everything figured out. Explore, practise, and adjust as you learn."
+           data-hi="आपको अभी सब कुछ तय करने की ज़रूरत नहीं है। खोजें, अभ्यास करें और सीखते हुए अपना रास्ता बदलें।">
+            You do not need to have everything figured out. Explore, practise, and adjust as you learn.
+        </p>
+    </div>
+
+    <div class="roadmap-grid">
+        <article class="roadmap-step">
+            <span class="step-number">01</span>
+            <h3 data-en="Know what matters to you" data-hi="जानें कि आपके लिए क्या मायने रखता है">Know what matters to you</h3>
+            <p data-en="List subjects and activities you enjoy, the problems you like solving, and the kind of workday you want."
+               data-hi="पसंदीदा विषयों और गतिविधियों, जिन समस्याओं को हल करना पसंद है, और अपने पसंदीदा कार्य-दिवस के बारे में लिखें।">
+                List subjects and activities you enjoy, the problems you like solving, and the kind of workday you want.
+            </p>
+        </article>
+
+        <article class="roadmap-step">
+            <span class="step-number">02</span>
+            <h3 data-en="Explore before you commit" data-hi="निर्णय से पहले जानकारी लें">Explore before you commit</h3>
+            <p data-en="Compare a few roles, courses, entry requirements, costs, and real day-to-day responsibilities. Ask people in the field about their experience."
+               data-hi="कुछ भूमिकाओं, कोर्स, प्रवेश-शर्तों, खर्चों और रोज़मर्रा की ज़िम्मेदारियों की तुलना करें। उस क्षेत्र के लोगों से उनका अनुभव पूछें।">
+                Compare a few roles, courses, entry requirements, costs, and real day-to-day responsibilities. Ask people in the field about their experience.
+            </p>
+        </article>
+
+        <article class="roadmap-step">
+            <span class="step-number">03</span>
+            <h3 data-en="Practise with a small project" data-hi="छोटे प्रोजेक्ट से अभ्यास करें">Practise with a small project</h3>
+            <p data-en="Try a beginner lesson, volunteer task, sample design, short article, or simple coding project. Notice what you enjoy and where you need practice."
+               data-hi="शुरुआती पाठ, स्वयंसेवा का काम, नमूना डिज़ाइन, छोटा लेख या आसान कोडिंग प्रोजेक्ट आज़माएँ। देखें कि क्या अच्छा लगता है और कहाँ अभ्यास चाहिए।">
+                Try a beginner lesson, volunteer task, sample design, short article, or simple coding project. Notice what you enjoy and where you need practice.
+            </p>
+        </article>
+
+        <article class="roadmap-step">
+            <span class="step-number">04</span>
+            <h3 data-en="Choose one next step" data-hi="अगला एक कदम चुनें">Choose one next step</h3>
+            <p data-en="Set a realistic weekly goal, keep examples of your work, and review your plan as your interests and circumstances change."
+               data-hi="हर सप्ताह का एक व्यावहारिक लक्ष्य तय करें, अपने काम के उदाहरण रखें और रुचियों या परिस्थितियों के बदलने पर योजना की समीक्षा करें।">
+                Set a realistic weekly goal, keep examples of your work, and review your plan as your interests and circumstances change.
+            </p>
+        </article>
+    </div>
+
+    <p class="roadmap-note" data-en="Before paying for a course or accepting a job, verify the provider, course recognition, fees, and eligibility requirements through reliable official sources. No course or career path can guarantee a job or income."
+       data-hi="कोर्स के लिए भुगतान करने या नौकरी स्वीकार करने से पहले विश्वसनीय आधिकारिक स्रोतों से संस्थान, मान्यता, शुल्क और पात्रता की पुष्टि करें। कोई भी कोर्स या करियर नौकरी या आय की गारंटी नहीं देता।">
+        Before paying for a course or accepting a job, verify the provider, course recognition, fees, and eligibility requirements through reliable official sources. No course or career path can guarantee a job or income.
+    </p>
+</section>
+
+<section id="ai-guide" style="background:#fff0f4">
+    <div class="section-heading">
+        <h2 data-en="🤖 Personalized Career Guidance Assistant" data-hi="🤖 व्यक्तिगत करियर गाइडेंस असिस्टेंट">🤖 Personalized Career Guidance Assistant</h2>
+        <p data-en="Tell us about your education, strengths, and goals for personalized career suggestions." data-hi="व्यक्तिगत करियर सुझाव पाने के लिए अपनी पढ़ाई, खूबियों और लक्ष्यों के बारे में बताइए।">Tell us about your education, strengths, and goals for personalized career suggestions.</p>
+    </div>
+
+    <div class="advisor-layout">
+        <div class="advisor-panel">
+            <form id="aiAdvisorForm">
+                <div class="form-group">
+                    <label for="aiEducation">Education level</label>
+                    <select id="aiEducation" required>
+                        <option value="">Select</option>
+                        <option value="school">School (Class 9-12)</option>
+                        <option value="college">College student</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="working">Work experience / career switch</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiSkills">Your strongest skills</label>
+                    <select id="aiSkills" required>
+                        <option value="">Select</option>
+                        <option value="technology">Technology / coding / digital skills</option>
+                        <option value="communication">Communication / writing / people skills</option>
+                        <option value="creative">Creative / design / storytelling</option>
+                        <option value="analysis">Analysis / numbers / problem-solving</option>
+                        <option value="care">Helping / healthcare / service</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiGoal">What do you want most?</label>
+                    <select id="aiGoal" required>
+                        <option value="">Select</option>
+                        <option value="job">High-paying job</option>
+                        <option value="freelance">Freelancing or flexible income</option>
+                        <option value="business">Business / entrepreneurship</option>
+                        <option value="study">Higher education / degree path</option>
+                        <option value="explore">Explore options first</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="aiInterest">What type of work feels interesting?</label>
+                    <select id="aiInterest" required>
+                        <option value="">Select</option>
+                        <option value="tech">Computers / AI / systems</option>
+                        <option value="business">Business / finance / management</option>
+                        <option value="creative">Design / media / content</option>
+                        <option value="health">Healthcare / biology / helping people</option>
+                        <option value="public">Public service / government / structured roles</option>
+                    </select>
+                </div>
+
+                <div class="ai-chip-row">
+                    <button type="button" class="ai-chip" data-quick="technology">Technology</button>
+                    <button type="button" class="ai-chip" data-quick="business">Business</button>
+                    <button type="button" class="ai-chip" data-quick="creative">Creative</button>
+                    <button type="button" class="ai-chip" data-quick="health">Healthcare</button>
+                </div>
+
+                <button type="submit" style="width:100%">Get My Best Path</button>
+            </form>
+        </div>
+
+        <div class="advisor-output">
+            <div class="chat-box" id="aiChatBox">
+                <div class="bubble assistant">Hi! Share your education, strengths, interests, and goals to get a personalized starting point. Guidance is generated by built-in rules, not a live AI service.</div>
+            </div>
+            <div id="guidanceHistory" aria-live="polite" style="margin-top:20px"></div>
+        </div>
+    </div>
+</section>
+
+<section id="career">
+    <div class="section-heading">
+        <h2 data-en="🎯 Find Your Best Career Path"
+            data-hi="🎯 अपने लिए सही करियर चुनें">
+            🎯 Find Your Best Career Path
+        </h2>
+        <p data-en="Answer a few questions to explore careers that may suit you."
+           data-hi="कुछ सवालों के जवाब दें और अपने लिए सही करियर खोजें।">
+           Answer a few questions to explore careers that may suit you.
+        </p>
+    </div>
+
+    <div class="form-container">
+        <div class="path-picker">
+            <div class="path-card selected" data-interest="technology" data-stream="science" data-goal="job">
+                <div class="emoji">💻</div>
+                <h4>Technology</h4>
+                <small>AI, coding, web</small>
+            </div>
+            <div class="path-card" data-interest="business" data-stream="commerce" data-goal="business">
+                <div class="emoji">📊</div>
+                <h4>Business</h4>
+                <small>Finance, marketing</small>
+            </div>
+            <div class="path-card" data-interest="creative" data-stream="arts" data-goal="freelance">
+                <div class="emoji">🎨</div>
+                <h4>Creative</h4>
+                <small>Design, media, writing</small>
+            </div>
+            <div class="path-card" data-interest="healthcare" data-stream="science" data-goal="study">
+                <div class="emoji">🩺</div>
+                <h4>Healthcare</h4>
+                <small>Biology, medical pathways</small>
+            </div>
+        </div>
+
+        <form id="careerForm">
+            <div class="form-group">
+                <label for="education" data-en="1. Your Education"
+                       data-hi="1. आपकी पढ़ाई">1. Your Education</label>
+                <select id="education" required>
+                    <option value="">Select your education</option>
+                    <option value="school">Class 9–10</option>
+                    <option value="12th">Class 11–12 / After 12th</option>
+                    <option value="college">College Student</option>
+                    <option value="graduate">Graduate</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stream" data-en="2. Your Stream"
+                       data-hi="2. आपकी स्ट्रीम">2. Your Stream</label>
+                <select id="stream" required>
+                    <option value="">Select your stream</option>
+                    <option value="science">Science</option>
+                    <option value="commerce">Commerce</option>
+                    <option value="arts">Arts / Humanities</option>
+                    <option value="other">Other / Not Sure</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="interest" data-en="3. What interests you?"
+                       data-hi="3. आपको किसमें रुचि है?">3. What interests you?</label>
+                <select id="interest" required>
+                    <option value="">Select your interest</option>
+                    <option value="technology">Technology & Computers</option>
+                    <option value="business">Business & Finance</option>
+                    <option value="creative">Creativity & Design</option>
+                    <option value="helping">Teaching & Helping People</option>
+                    <option value="healthcare">Healthcare & Biology</option>
+                    <option value="government">Government Jobs</option>
+                    <option value="unknown">I Don't Know Yet</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="skills" data-en="4. Your Current Skills"
+                       data-hi="4. आपकी स्किल्स">4. Your Current Skills</label>
+                <select id="skills" required>
+                    <option value="">Select your level</option>
+                    <option value="beginner">Beginner — No Special Skills</option>
+                    <option value="some">I Have Some Skills</option>
+                    <option value="advanced">I Have Strong Skills</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="budget" data-en="5. Education Budget"
+                       data-hi="5. पढ़ाई का बजट">5. Education Budget</label>
+                <select id="budget" required>
+                    <option value="">Select your budget</option>
+                    <option value="low">Low — Prefer Affordable Options</option>
+                    <option value="medium">Moderate</option>
+                    <option value="high">Flexible</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="goal" data-en="6. Your Main Goal"
+                       data-hi="6. आपका मुख्य लक्ष्य">6. Your Main Goal</label>
+                <select id="goal" required>
+                    <option value="">Select your goal</option>
+                    <option value="job">Get a Job</option>
+                    <option value="business">Start a Business</option>
+                    <option value="freelance">Earn Through Freelancing</option>
+                    <option value="study">Continue Higher Education</option>
+                    <option value="explore">Explore My Options</option>
+                </select>
+            </div>
+
+            <button type="submit" style="width:100%"
+                    data-en="Get My Career Suggestions →"
+                    data-hi="मेरे करियर सुझाव देखें →">
+                Get My Career Suggestions →
+            </button>
+        </form>
+
+        <div class="result" id="careerResults" aria-live="polite"></div>
+    </div>
+</section>
+
+<section id="study">
+    <div class="section-heading">
+        <h2 data-en="📚 Your Study Planner"
+            data-hi="📚 आपका स्टडी प्लानर">📚 Your Study Planner</h2>
+        <p data-en="Create small goals and make progress every day."
+           data-hi="छोटे लक्ष्य बनाएँ और रोज़ आगे बढ़ें।">
+           Create small goals and make progress every day.
+        </p>
+    </div>
+
+    <div class="planner">
+        <div class="form-group">
+            <label for="taskInput" data-en="Add a study task"
+                   data-hi="पढ़ाई का टास्क जोड़ें">Add a study task</label>
+            <input id="taskInput" type="text"
+                   placeholder="e.g. Study DBMS for 30 minutes">
+        </div>
+
+        <button onclick="addTask()" data-en="Add Task +" data-hi="टास्क जोड़ें +">
+            Add Task +
+        </button>
+
+        <h3 style="margin-top:25px" data-en="My Tasks" data-hi="मेरे टास्क">My Tasks</h3>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p id="progressText">0% completed</p>
+        <div id="taskList"></div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="section-heading">
+        <h2 data-en="🧠 Skills You Can Start Learning"
+            data-hi="🧠 सीखने योग्य स्किल्स">
+            🧠 Skills You Can Start Learning
+        </h2>
+        <p data-en="Start small, practise, and build projects."
+           data-hi="छोटी शुरुआत करें, अभ्यास करें और प्रोजेक्ट बनाएँ।">
+           Start small, practise, and build projects.
+        </p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">💻</div>
+            <h3>Web Development</h3>
+            <p>Learn HTML, CSS and JavaScript. Build a personal website as your first project.</p>
+            <span class="tag">Beginner-friendly</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎨</div>
+            <h3>Graphic Design</h3>
+            <p>Practise layouts, typography and colour. Build a portfolio of sample designs.</p>
+            <span class="tag">Creative</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>Data Analytics</h3>
+            <p>Start with spreadsheets, charts, basic statistics and SQL.</p>
+            <span class="tag">Problem-solving</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">✍️</div>
+            <h3>Writing & Communication</h3>
+            <p>Practise writing articles, explaining concepts and editing your work.</p>
+            <span class="tag">Flexible learning</span>
+        </div>
+    </div>
+
+    <div class="section-heading" style="margin-top:45px">
+        <h2>Free YouTube learning channels</h2>
+        <p>Use these channels to get started, then practise by building your own projects.</p>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <div class="icon">🐍</div>
+            <h3>Python — CodeWithHarry</h3>
+            <p>Explore beginner Python lessons and practise the examples on your own computer.</p>
+            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer">Visit CodeWithHarry</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">🌐</div>
+            <h3>Web Development — CodeWithHarry</h3>
+            <p>Learn web basics and build small pages with HTML, CSS, and JavaScript.</p>
+            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer">Learn Web Development</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">👩‍💻</div>
+            <h3>Programming — Apna College</h3>
+            <p>Explore programming and computer-science lessons, then reinforce them with projects.</p>
+            <a class="primary-btn" href="https://www.youtube.com/@ApnaCollegeOfficial" target="_blank" rel="noopener noreferrer">Visit Apna College</a>
+        </div>
+    </div>
+</section>
+
+<section id="income" style="background:white">
+    <div class="section-heading">
+        <h2 data-en="💰 Explore Income Opportunities"
+            data-hi="💰 कमाई के अवसर खोजें">
+            💰 Explore Income Opportunities
+        </h2>
+        <p data-en="Learn what each path requires before investing time or money."
+           data-hi="समय या पैसे लगाने से पहले हर विकल्प की जानकारी लें।">
+           Learn what each path requires before investing time or money.
+        </p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">👩‍🏫</div>
+            <h3>Tutoring</h3>
+            <p>Teach younger students in subjects you understand well. Start by preparing a sample lesson.</p>
+            <span class="tag">Teaching</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎬</div>
+            <h3>Video Editing</h3>
+            <p>Practise editing short videos and create sample work before approaching clients.</p>
+            <span class="tag">Creative</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">🌐</div>
+            <h3>Website Projects</h3>
+            <p>Build sample websites and learn to show your work professionally.</p>
+            <span class="tag">Technology</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">💼</div>
+            <h3>Internships</h3>
+            <p>Look for relevant opportunities, check the employer carefully, and never pay to obtain a job.</p>
+            <span class="tag">Career experience</span>
+        </div>
+    </div>
+
+    <p style="text-align:center;margin-top:25px;color:#725967">
+        Learning a skill does not guarantee income. Earnings depend on your ability,
+        portfolio, experience, demand and available opportunities.
+    </p>
+</section>
+
+<section class="cta">
+    <h2 data-en="Your Future Is in Your Hands!"
+        data-hi="आपका भविष्य आपके हाथों में है!">
+        Your Future Is in Your Hands!
+    </h2>
+    <p data-en="Start exploring your interests and take one small step today."
+       data-hi="अपनी रुचियाँ जानें और आज एक छोटा कदम उठाएँ।">
+       Start exploring your interests and take one small step today.
+    </p>
+    <button onclick="document.getElementById('career').scrollIntoView()"
+            data-en="Start My Journey" data-hi="शुरू करें">
+        Start My Journey
+    </button>
+</section>
+
+</main>
+
+<footer>
+    <div class="logo" style="color:white">CarrierPath</div>
+    <p data-en="Your companion for study, career and skill development."
+       data-hi="पढ़ाई, करियर और स्किल डेवलपमेंट में आपका साथी।">
+       Your companion for study, career and skill development.
+    </p>
+    <p>© 2026 CarrierPath. All rights reserved.</p>
+    <p>This website provides educational guidance, not guaranteed career or income outcomes.</p>
+    <p data-en="Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. We do not ask for your name or email. Please do not submit sensitive personal information."
+       data-hi="मार्गदर्शन फ़ॉर्म जमा करने पर आपकी पढ़ाई, रुचियाँ, कौशल, लक्ष्य, बजट और सुझाव वेबसाइट सर्वर पर सहेजे जाते हैं। हम आपका नाम या ईमेल नहीं पूछते। कृपया संवेदनशील निजी जानकारी न भेजें।">
+       Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. We do not ask for your name or email. Please do not submit sensitive personal information.
+    </p>
+</footer>
+
+<script>
+let currentLanguage = "en";
+
+function toggleLanguage() {
+    currentLanguage = currentLanguage === "en" ? "hi" : "en";
+
+    // Each translatable element stores both versions in data attributes, so no page reload is needed.
+    document.querySelectorAll("[data-en][data-hi]").forEach(element => {
+        element.innerHTML = element.dataset[currentLanguage];
+    });
+
+    document.getElementById("languageBtn").textContent =
+        currentLanguage === "en" ? "हिंदी" : "English";
+
+    document.documentElement.lang = currentLanguage;
+}
+
+const careerDatabase = {
+    technology: [
+        {
+            title: "Web Developer",
+            description: "Build websites and web applications.",
+            skills: "HTML, CSS, JavaScript",
+            route: "Learn the basics, build 2–3 projects, then explore internships.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Data Analyst",
+            description: "Use data to solve business problems.",
+            skills: "Excel, SQL, statistics",
+            route: "Learn spreadsheets and SQL, then complete a data project.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "IT Support Professional",
+            description: "Help people solve computer and network problems.",
+            skills: "Computer basics, troubleshooting, networking",
+            route: "Practise computer troubleshooting and explore recognized training.",
+            streams: ["science", "commerce", "arts", "other"]
+        }
+    ],
+
+    business: [
+        {
+            title: "Accounting Professional",
+            description: "Work with accounts, records and financial information.",
+            skills: "Accounting, spreadsheets, attention to detail",
+            route: "Learn accounting fundamentals and check course eligibility.",
+            streams: ["commerce", "science", "arts", "other"]
+        },
+        {
+            title: "Digital Marketing",
+            description: "Help businesses reach customers online.",
+            skills: "Content, analytics, communication",
+            route: "Study marketing basics and build a sample campaign.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Business Analyst",
+            description: "Understand business needs and help improve processes.",
+            skills: "Excel, communication, problem-solving",
+            route: "Practise spreadsheets and business case studies.",
+            streams: ["science", "commerce", "arts", "other"]
+        }
+    ],
+
+    creative: [
+        {
+            title: "Graphic Designer",
+            description: "Create visual content for brands and businesses.",
+            skills: "Design fundamentals, typography, layout",
+            route: "Create sample posters and build a design portfolio.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Content Writer",
+            description: "Create useful written content for different audiences.",
+            skills: "Writing, research, editing",
+            route: "Write sample articles and practise editing.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Video Editor",
+            description: "Edit video content for online and professional use.",
+            skills: "Editing, storytelling, audio basics",
+            route: "Make sample videos and build a small portfolio.",
+            streams: ["science", "commerce", "arts", "other"]
+        }
+    ],
+
+    helping: [
+        {
+            title: "Teacher or Tutor",
+            description: "Help others understand subjects and develop skills.",
+            skills: "Subject knowledge, patience, communication",
+            route: "Practise teaching and check relevant qualification requirements.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Psychology Pathway",
+            description: "Explore human behaviour and psychology-related study.",
+            skills: "Listening, research, critical thinking",
+            route: "Research recognized degrees and professional qualification rules.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Social Work",
+            description: "Support individuals and communities through organized services.",
+            skills: "Communication, empathy, problem-solving",
+            route: "Explore social science courses and practical volunteering.",
+            streams: ["science", "commerce", "arts", "other"]
+        }
+    ],
+
+    healthcare: [
+        {
+            title: "Healthcare Professional",
+            description: "Explore healthcare and allied health career pathways.",
+            skills: "Biology fundamentals, communication, attention to detail",
+            route: "Check the specific course, science prerequisites and licensing rules.",
+            streams: ["science"]
+        },
+        {
+            title: "Biology and Life Sciences",
+            description: "Explore laboratory science, research and life-science careers.",
+            skills: "Biology, scientific reasoning, lab fundamentals",
+            route: "Compare recognized courses and their entry requirements.",
+            streams: ["science"]
+        }
+    ],
+
+    government: [
+        {
+            title: "Government Exam Pathway",
+            description: "Explore eligible government recruitment examinations.",
+            skills: "General knowledge, reasoning, subject preparation",
+            route: "Choose exams based on age, qualification and official eligibility.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Public Sector Career",
+            description: "Explore public-sector roles and relevant recruitment routes.",
+            skills: "Role-specific knowledge and exam preparation",
+            route: "Check official recruitment notices and qualification criteria.",
+            streams: ["science", "commerce", "arts", "other"]
+        }
+    ],
+
+    unknown: [
+        {
+            title: "Explore Technology",
+            description: "Try a beginner computer or coding activity.",
+            skills: "Curiosity, logical thinking",
+            route: "Complete a small beginner project before deciding.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Explore Business",
+            description: "Try budgeting, spreadsheets or a business case study.",
+            skills: "Planning, communication, problem-solving",
+            route: "Complete a simple budgeting or market-research exercise.",
+            streams: ["science", "commerce", "arts", "other"]
+        },
+        {
+            title: "Explore Creative Work",
+            description: "Try writing, design or video editing.",
+            skills: "Creativity, practice, communication",
+            route: "Complete a small creative project and reflect on the experience.",
+            streams: ["science", "commerce", "arts", "other"]
+        }
+    ]
+};
+
+document.querySelectorAll('.path-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // The card's data-* values pre-fill matching answers in the longer career form.
+        document.getElementById('interest').value = this.dataset.interest;
+        document.getElementById('stream').value = this.dataset.stream;
+        document.getElementById('goal').value = this.dataset.goal;
+
+        document.querySelectorAll('.path-card').forEach(item => item.classList.remove('selected'));
+        this.classList.add('selected');
+    });
+});
+
+async function requestGuidance(profile) {
+    // Send the form choices to Python; the server validates them and saves the result.
+    const response = await fetch('/api/recommendations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profile)
+    });
+    const result = await response.json();
+    if (!response.ok) {
+        throw new Error(result.error || 'The guidance request could not be completed.');
+    }
+    return result;
+}
+
+function displayApiError(target, error) {
+    target.innerHTML = `<div class="bubble assistant">Could not reach the CarrierPath service: ${error.message} Please try again later.</div>`;
+}
+
+async function refreshGuidanceHistory() {
+    // Fetch saved results from SQLite through the API instead of keeping history only in this page.
+    const history = document.getElementById('guidanceHistory');
+    try {
+        const response = await fetch('/api/recommendations');
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.error || 'Could not load saved guidance.');
+        }
+        history.innerHTML = result.recommendations.length
+            ? `<h3>Recently saved guidance</h3>${result.recommendations.map(item =>
+                `<div class="result-card"><strong>#${item.id} · ${item.title}</strong><br><small>${new Date(item.created_at).toLocaleString()}</small></div>`
+            ).join('')}`
+            : '<p>Submitted guidance will appear here for visitors to this website.</p>';
+    } catch (error) {
+        history.innerHTML = `<p>${error.message} Please try again later.</p>`;
+    }
+}
+
+document.getElementById('aiAdvisorForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const data = {
+        mode: 'advisor',
+        education: document.getElementById('aiEducation').value,
+        skills: document.getElementById('aiSkills').value,
+        goal: document.getElementById('aiGoal').value,
+        interest: document.getElementById('aiInterest').value
+    };
+
+    if (!data.education || !data.skills || !data.goal || !data.interest) {
+        alert('Please complete all fields to get a personalized recommendation.');
+        return;
+    }
+
+    const box = document.getElementById('aiChatBox');
+    // The quick chips use shorter UI values; map them to the names accepted by the Python API.
+    const interestAliases = { tech: 'technology', health: 'health', public: 'public' };
+    data.interest = interestAliases[data.interest] || data.interest;
+    box.innerHTML = '<div class="bubble assistant">Creating your guidance recommendation…</div>';
+    try {
+        const result = await requestGuidance(data);
+        const recommendation = result.recommendation;
+        box.innerHTML = `
+            <div class="bubble user">Education: ${data.education}. Interest: ${data.interest}. Strength: ${data.skills}. Goal: ${data.goal}.</div>
+            <div class="bubble assistant">
+                <strong>Recommended path:</strong> ${recommendation.title}<br>
+                ${recommendation.summary}<br><br>
+                <strong>Why this may fit:</strong><br>
+                ${recommendation.skill_text}<br>
+                ${recommendation.goal_text}<br>
+                ${recommendation.education_text}
+                <ul class="advice-list">${recommendation.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                <strong>Career options to explore:</strong> ${recommendation.good_for.join(', ')}
+                <p><small>Saved guidance #${result.id}. Explore these suggestions; they are not a definitive assessment.</small></p>
+            </div>`;
+        await refreshGuidanceHistory();
+    } catch (error) {
+        displayApiError(box, error);
+    }
+});
+
+document.querySelectorAll('.ai-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+        const quick = this.dataset.quick;
+        const formValue = { technology: 'tech', business: 'business', creative: 'creative', health: 'health' };
+        document.getElementById('aiInterest').value = formValue[quick];
+        const suggestion = {
+            technology: 'Technology & Digital Careers',
+            business: 'Business & Finance Careers',
+            creative: 'Creative & Media Careers',
+            health: 'Healthcare & Human-Centered Careers'
+        };
+        const box = document.getElementById('aiChatBox');
+        box.innerHTML = `<div class="bubble assistant">I recommend starting with <strong>${suggestion[quick]}</strong> if you want a path that's practical and aligned with modern opportunities.</div>`;
+    });
+});
+
+document.getElementById("careerForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const education = document.getElementById("education").value;
+    const stream = document.getElementById("stream").value;
+    const interest = document.getElementById("interest").value;
+    const skills = document.getElementById("skills").value;
+    const budget = document.getElementById("budget").value;
+    const goal = document.getElementById("goal").value;
+
+    const results = document.getElementById("careerResults");
+    results.style.display = "block";
+    results.innerHTML = "<p>Finding career suggestions…</p>";
+    try {
+        // The API returns a validated recommendation and a database ID for the saved submission.
+        const result = await requestGuidance({
+            mode: 'career', education, stream, interest, skills, budget, goal
+        });
+        const recommendation = result.recommendation;
+        results.innerHTML = `
+            <h2>🎯 Your Career Suggestions</h2>
+            <p>These are starting points to explore, not a definitive aptitude test or a guarantee of success.</p>
+            <br>
+            ${recommendation.careers.map((career, index) => `
+                <div class="result-card">
+                    <h3>${index + 1}. ${career.title}</h3>
+                    <p>${career.description}</p>
+                    <p><strong>Skills to develop:</strong> ${career.skills}</p>
+                    <p><strong>Suggested roadmap:</strong> ${career.route}</p>
+                    <span class="tag">Explore and practise</span>
+                </div>`).join("")}
+            <div class="result-card">
+                <h3>📌 Your Next Step</h3>
+                <p>${recommendation.goal_text}</p>
+                <p>${recommendation.education_text}</p>
+                ${recommendation.beginner_tip ? `<p><strong>Beginner tip:</strong> ${recommendation.beginner_tip}</p>` : ""}
+                ${recommendation.budget_tip ? `<p><strong>Budget tip:</strong> ${recommendation.budget_tip}</p>` : ""}
+                <p><strong>Education:</strong> ${recommendation.education}</p>
+                <p><strong>Stream:</strong> ${recommendation.stream}</p>
+                <p><strong>Saved guidance:</strong> #${result.id}</p>
+                <p><strong>Important:</strong> Verify eligibility, qualifications and current admission rules before enrolling.</p>
+            </div>`;
+        await refreshGuidanceHistory();
+    } catch (error) {
+        results.innerHTML = `<div class="result-card"><strong>Guidance unavailable.</strong> ${error.message} Start the backend with <code>python app.py</code>, then open <code>http://127.0.0.1:8000</code>.</div>`;
+    }
+    results.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+refreshGuidanceHistory();
+
+function showSkills() {
+    document.getElementById("skills").scrollIntoView({ behavior: "smooth" });
+}
+
+let taskCount = 0;
+
+function addTask() {
+    const input = document.getElementById("taskInput");
+    const taskText = input.value.trim();
+
+    if (!taskText) {
+        alert("Please enter a study task.");
+        return;
+    }
+
+    taskCount++;
+
+    const task = document.createElement("div");
+    task.className = "task";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = "task-" + taskCount;
+
+    const label = document.createElement("label");
+    label.htmlFor = checkbox.id;
+    label.textContent = taskText;
+
+    checkbox.addEventListener("change", updateProgress);
+
+    task.appendChild(checkbox);
+    task.appendChild(label);
+
+    document.getElementById("taskList").appendChild(task);
+
+    input.value = "";
+    updateProgress();
+}
+
+function updateProgress() {
+    const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
+    const completed = document.querySelectorAll("#taskList input[type='checkbox']:checked");
+
+    // Divide completed tasks by all tasks; keep an empty planner at zero instead of dividing by zero.
+    const percentage = checkboxes.length
+        ? Math.round((completed.length / checkboxes.length) * 100)
+        : 0;
+
+    document.getElementById("progressFill").style.width = percentage + "%";
+    document.getElementById("progressText").textContent =
+        percentage + "% completed (" + completed.length + "/" + checkboxes.length + " tasks)";
+}
+</script>
+
+</body>
+</html>
