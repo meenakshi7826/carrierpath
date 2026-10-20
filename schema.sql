@@ -14,3 +14,15 @@ CREATE TABLE IF NOT EXISTS guidance_sessions (
 
 CREATE INDEX IF NOT EXISTS idx_guidance_sessions_created_at
     ON guidance_sessions(created_at DESC);
+
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+    endpoint TEXT PRIMARY KEY,
+    subscription_json TEXT NOT NULL,
+    reminder_time TEXT NOT NULL,
+    timezone TEXT NOT NULL,
+    enabled INTEGER NOT NULL DEFAULT 1 CHECK (enabled IN (0, 1)),
+    last_sent_date TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_push_subscriptions_enabled
+    ON push_subscriptions(enabled);

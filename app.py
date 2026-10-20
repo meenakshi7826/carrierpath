@@ -1,13 +1,28 @@
 import json
+import hmac
+import json
+import os
+import re
 import sqlite3
+import sys
+from contextlib import closing
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 
 ROOT = Path(__file__).resolve().parent
-DATABASE = ROOT / "carrierpath.sqlite3"
+DATABASE = Path(
+    os.environ.get("CARRIERPATH_DATABASE", str(ROOT / "carrierpath.sqlite3"))
+).expanduser().resolve()
 MAX_BODY_BYTES = 16_384
+PUSH_NOTIFICATION = {
+    "title": "Time for your study session",
+    "body": "Your planned study time is here. Take one small step today.",
+    "url": "/#study",
+}
 
 ALLOWED = {
     # Only accept values offered by the forms; never trust browser-submitted choices.
@@ -258,8 +273,221 @@ EDUCATION_TEXT = {
 
 def initialize_database():
     # Reapplying CREATE TABLE IF NOT EXISTS makes startup safe for both new and existing databases.
-    with sqlite3.connect(DATABASE) as connection:
-        connection.executescript((ROOT / "schema.sql").read_text(encoding="utf-8"))
+    with closing(sqlite3.connect(DATABASE)) as connection:
+        with connection:
+            connection.executescript((ROOT / "schema.sql").read_text(encoding="utf-8"))
+
+
+def get_vapid_configuration():
+    public_key = os.environ.get("VAPID_PUBLIC_KEY", "").strip()
+    private_key = os.environ.get("VAPID_PRIVATE_KEY", "").strip()
+    subject = os.environ.get("VAPID_SUBJECT", "").strip()
+    if not public_key or not private_key or not subject:
+        raise RuntimeError(
+            "Push notifications are not configured. Set VAPID_PUBLIC_KEY, "
+            "VAPID_PRIVATE_KEY, and VAPID_SUBJECT."
+        )
+    if not Path(private_key).is_file():
+        raise RuntimeError("VAPID_PRIVATE_KEY must point to the private PEM key file.")
+    if not subject.startswith(("mailto:", "https://")):
+        raise RuntimeError("VAPID_SUBJECT must be a mailto: address or HTTPS URL.")
+    return public_key, private_key, subject
+
+
+def has_valid_scheduler_token(authorization):
+    expected_token = os.environ.get("PUSH_SCHEDULER_TOKEN", "")
+    if not expected_token or not isinstance(authorization, str):
+        return False
+    prefix = "Bearer "
+    if not authorization.startswith(prefix):
+        return False
+    return hmac.compare_digest(authorization[len(prefix):], expected_token)
+
+
+def validate_push_endpoint(endpoint):
+    if not isinstance(endpoint, str) or not endpoint or len(endpoint) > 4096:
+        raise ValueError("A valid push subscription endpoint is required.")
+
+    parsed = urlparse(endpoint)
+    hostname = (parsed.hostname or "").lower()
+    trusted_host = (
+        hostname in {"fcm.googleapis.com", "updates.push.services.mozilla.com"}
+        or hostname == "notify.windows.com"
+        or hostname.endswith(".notify.windows.com")
+        or hostname.endswith(".push.apple.com")
+    )
+    try:
+        valid_port = parsed.port in {None, 443}
+    except ValueError:
+        valid_port = False
+
+    if (
+        parsed.scheme != "https"
+        or not trusted_host
+        or parsed.username is not None
+        or parsed.password is not None
+        or not valid_port
+    ):
+        raise ValueError("The push subscription endpoint is not supported.")
+    return endpoint
+
+
+def validate_push_subscription(payload):
+    if not isinstance(payload, dict):
+        raise ValueError("Request body must be a JSON object.")
+
+    subscription = payload.get("subscription")
+    if not isinstance(subscription, dict):
+        raise ValueError("A valid push subscription is required.")
+    endpoint = validate_push_endpoint(subscription.get("endpoint"))
+    keys = subscription.get("keys")
+    if not isinstance(keys, dict):
+        raise ValueError("Push subscription keys are required.")
+    auth = keys.get("auth")
+    p256dh = keys.get("p256dh")
+    if not all(isinstance(value, str) and 1 <= len(value) <= 256 for value in (auth, p256dh)):
+        raise ValueError("Push subscription keys are invalid.")
+
+    reminder_time = payload.get("reminder_time")
+    if not isinstance(reminder_time, str) or not re.fullmatch(
+        r"(?:[01]\d|2[0-3]):[0-5]\d", reminder_time
+    ):
+        raise ValueError("Choose a valid reminder time.")
+
+    timezone_name = payload.get("timezone")
+    if not isinstance(timezone_name, str) or len(timezone_name) > 100:
+        raise ValueError("Choose a valid time zone.")
+    try:
+        ZoneInfo(timezone_name)
+    except (ZoneInfoNotFoundError, ValueError):
+        raise ValueError("Choose a valid time zone.") from None
+
+    return (
+        {
+            "endpoint": endpoint,
+            "keys": {"auth": auth, "p256dh": p256dh},
+        },
+        reminder_time,
+        timezone_name,
+    )
+
+
+def save_push_subscription(payload):
+    subscription, reminder_time, timezone_name = validate_push_subscription(payload)
+    with closing(sqlite3.connect(DATABASE)) as connection:
+        with connection:
+            connection.execute(
+                """
+                INSERT INTO push_subscriptions
+                    (endpoint, subscription_json, reminder_time, timezone, enabled)
+                VALUES (?, ?, ?, ?, 1)
+                ON CONFLICT(endpoint) DO UPDATE SET
+                    subscription_json = excluded.subscription_json,
+                    reminder_time = excluded.reminder_time,
+                    timezone = excluded.timezone,
+                    enabled = 1
+                """,
+                (
+                    subscription["endpoint"],
+                    json.dumps(subscription),
+                    reminder_time,
+                    timezone_name,
+                ),
+            )
+    return {"enabled": True, "reminder_time": reminder_time, "timezone": timezone_name}
+
+
+def remove_push_subscription(payload):
+    if not isinstance(payload, dict):
+        raise ValueError("Request body must be a JSON object.")
+    endpoint = validate_push_endpoint(payload.get("endpoint"))
+    with closing(sqlite3.connect(DATABASE)) as connection:
+        with connection:
+            connection.execute(
+                "DELETE FROM push_subscriptions WHERE endpoint = ?", (endpoint,)
+            )
+    return {"enabled": False}
+
+
+def send_due_reminders(now=None, push_sender=None):
+    _, private_key, subject = get_vapid_configuration()
+    if push_sender is None:
+        from pywebpush import WebPushException, webpush
+
+        push_sender = webpush
+    else:
+        from pywebpush import WebPushException
+
+    current_time = now or datetime.now(timezone.utc)
+    if current_time.tzinfo is None:
+        raise ValueError("The current time must include a time zone.")
+
+    with closing(sqlite3.connect(DATABASE)) as connection:
+        subscriptions = connection.execute(
+            """
+            SELECT endpoint, subscription_json, reminder_time, timezone, last_sent_date
+            FROM push_subscriptions
+            WHERE enabled = 1
+            """
+        ).fetchall()
+
+    sent = 0
+    failed = 0
+    removed = 0
+    for endpoint, serialized, reminder_time, timezone_name, last_sent_date in subscriptions:
+        local_time = current_time.astimezone(ZoneInfo(timezone_name))
+        local_date = local_time.date().isoformat()
+        if local_time.strftime("%H:%M") < reminder_time or last_sent_date == local_date:
+            continue
+
+        try:
+            push_headers = {}
+            ttl = 3600
+            hostname = (urlparse(endpoint).hostname or "").lower()
+            if hostname == "notify.windows.com" or hostname.endswith(
+                ".notify.windows.com"
+            ):
+                push_headers = {
+                    "X-WNS-Type": "wns/raw",
+                    "Content-Type": "application/octet-stream",
+                }
+                ttl = 600
+            push_sender(
+                subscription_info=json.loads(serialized),
+                data=json.dumps(PUSH_NOTIFICATION),
+                vapid_private_key=private_key,
+                vapid_claims={"sub": subject},
+                headers=push_headers,
+                ttl=ttl,
+            )
+        except WebPushException as error:
+            failed += 1
+            if error.response is not None and error.response.status_code in {404, 410}:
+                with closing(sqlite3.connect(DATABASE)) as connection:
+                    with connection:
+                        connection.execute(
+                            "DELETE FROM push_subscriptions WHERE endpoint = ?", (endpoint,)
+                        )
+                removed += 1
+            print(
+                f"Push delivery failed with status {error.response.status_code if error.response else 'unknown'}.",
+                file=sys.stderr,
+            )
+            continue
+
+        with closing(sqlite3.connect(DATABASE)) as connection:
+            with connection:
+                connection.execute(
+                    """
+                    UPDATE push_subscriptions
+                    SET last_sent_date = ?
+                    WHERE endpoint = ?
+                    """,
+                    (local_date, endpoint),
+                )
+        sent += 1
+
+    return {"sent": sent, "failed": failed, "removed": removed}
 
 
 def normalize_profile(payload):
@@ -392,8 +620,31 @@ class CarrierPathHandler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
 
+        if path == "/service-worker.js":
+            try:
+                body = (ROOT / "service-worker.js").read_bytes()
+            except OSError:
+                self.send_json(500, {"error": "Could not load the service worker."})
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", "application/javascript; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Service-Worker-Allowed", "/")
+            self.end_headers()
+            self.wfile.write(body)
+            return
+
         if path == "/api/health":
             self.send_json(200, {"status": "ok"})
+            return
+
+        if path == "/api/push/public-key":
+            try:
+                public_key, _, _ = get_vapid_configuration()
+            except RuntimeError as error:
+                self.send_json(503, {"error": str(error)})
+                return
+            self.send_json(200, {"public_key": public_key})
             return
 
         if path == "/api/recommendations":
@@ -426,7 +677,24 @@ class CarrierPathHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         """Read one bounded JSON profile, validate it, generate advice, and persist it."""
-        if urlparse(self.path).path != "/api/recommendations":
+        path = urlparse(self.path).path
+        if path == "/api/push/send-due":
+            if not has_valid_scheduler_token(self.headers.get("Authorization", "")):
+                self.send_json(401, {"error": "Unauthorized."})
+                return
+            try:
+                result = send_due_reminders()
+            except RuntimeError as error:
+                self.send_json(503, {"error": str(error)})
+                return
+            except sqlite3.Error:
+                self.log_error("Database error while sending study reminders")
+                self.send_json(500, {"error": "Could not send study reminders."})
+                return
+            self.send_json(200, result)
+            return
+
+        if path not in {"/api/recommendations", "/api/push/subscriptions"}:
             self.send_json(404, {"error": "Not found."})
             return
 
@@ -442,7 +710,12 @@ class CarrierPathHandler(BaseHTTPRequestHandler):
         try:
             # Validation and recommendation failures are client errors; storage failures
             # are handled separately below so they are not disguised as bad form input.
-            payload = json.loads(self.rfile.read(content_length))
+            request_body = self.rfile.read(content_length)
+            payload = json.loads(request_body)
+            if path == "/api/push/subscriptions":
+                result = save_push_subscription(payload)
+                self.send_json(201, result)
+                return
             profile = normalize_profile(payload)
             recommendation = create_recommendation(profile)
             record = save_recommendation(profile, recommendation)
@@ -456,13 +729,49 @@ class CarrierPathHandler(BaseHTTPRequestHandler):
 
         self.send_json(201, {**record, "recommendation": recommendation})
 
+    def do_DELETE(self):
+        if urlparse(self.path).path != "/api/push/subscriptions":
+            self.send_json(404, {"error": "Not found."})
+            return
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            self.send_json(400, {"error": "Invalid Content-Length header."})
+            return
+        if content_length <= 0 or content_length > MAX_BODY_BYTES:
+            self.send_json(413, {"error": "Request body is missing or too large."})
+            return
+        try:
+            payload = json.loads(self.rfile.read(content_length))
+            result = remove_push_subscription(payload)
+        except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
+            self.send_json(400, {"error": str(error)})
+            return
+        except sqlite3.Error:
+            self.log_error("Database error while removing a push subscription")
+            self.send_json(500, {"error": "Could not disable study reminders."})
+            return
+        self.send_json(200, result)
+
     def log_message(self, format_string, *args):
         print("%s - %s" % (self.address_string(), format_string % args))
 
 
 def main():
-    """Initialize SQLite and start the local development web server."""
+    """Run the local server or send reminders due at the current time."""
     initialize_database()
+    if len(sys.argv) > 1:
+        if sys.argv[1:] != ["send-due-reminders"]:
+            raise SystemExit("Usage: python app.py [send-due-reminders]")
+        result = send_due_reminders()
+        print(
+            f"Study reminders sent: {result['sent']}; "
+            f"failed: {result['failed']}; expired subscriptions removed: {result['removed']}."
+        )
+        if result["failed"]:
+            return 1
+        return 0
+
     server = ThreadingHTTPServer(("127.0.0.1", 8000), CarrierPathHandler)
     print("CarrierPath running at http://127.0.0.1:8000")
     try:
@@ -474,4 +783,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
