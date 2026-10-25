@@ -68,8 +68,29 @@ def application(environ, start_response):
             return _response(start_response, 500, {"error": "Could not load the website."})
         return _response(start_response, 200, page, "text/html; charset=utf-8")
 
+    if method == "GET" and path == "/service-worker.js":
+        try:
+            worker = (carrierpath.ROOT / "service-worker.js").read_bytes()
+        except OSError:
+            return _response(
+                start_response, 500, {"error": "Could not load the service worker."}
+            )
+        return _response(
+            start_response,
+            200,
+            worker,
+            "application/javascript; charset=utf-8",
+        )
+
     if method == "GET" and path == "/api/health":
         return _response(start_response, 200, {"status": "ok"})
+
+    if method == "GET" and path == "/api/push/public-key":
+        try:
+            public_key, _, _ = carrierpath.get_vapid_configuration()
+        except RuntimeError as error:
+            return _response(start_response, 503, {"error": str(error)})
+        return _response(start_response, 200, {"public_key": public_key})
 
     if method == "GET" and path == "/api/recommendations":
         try:
@@ -108,6 +129,68 @@ def application(environ, start_response):
         return _response(
             start_response, 201, {**record, "recommendation": recommendation}
         )
+
+    if method == "POST" and path == "/api/push/subscriptions":
+        try:
+            content_length = int(environ.get("CONTENT_LENGTH") or "0")
+        except ValueError:
+            return _response(
+                start_response, 400, {"error": "Invalid Content-Length header."}
+            )
+        if content_length <= 0 or content_length > carrierpath.MAX_BODY_BYTES:
+            return _response(
+                start_response, 413, {"error": "Request body is missing or too large."}
+            )
+        try:
+            payload = json.loads(environ["wsgi.input"].read(content_length))
+            result = carrierpath.save_push_subscription(payload)
+        except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
+            return _response(start_response, 400, {"error": str(error)})
+        except sqlite3.Error:
+            return _response(
+                start_response, 500, {"error": "Could not save the study reminder."}
+            )
+        return _response(start_response, 201, result)
+
+    if method == "POST" and path == "/api/push/send-due":
+        authorization = environ.get("HTTP_AUTHORIZATION", "")
+        if not carrierpath.has_valid_scheduler_token(authorization):
+            return _response(start_response, 401, {"error": "Unauthorized."})
+        if environ.get("CONTENT_LENGTH") not in {None, "", "0"}:
+            return _response(
+                start_response, 400, {"error": "Request body must be empty."}
+            )
+        try:
+            result = carrierpath.send_due_reminders()
+        except RuntimeError as error:
+            return _response(start_response, 503, {"error": str(error)})
+        except sqlite3.Error:
+            return _response(
+                start_response, 500, {"error": "Could not send study reminders."}
+            )
+        return _response(start_response, 200, result)
+
+    if method == "DELETE" and path == "/api/push/subscriptions":
+        try:
+            content_length = int(environ.get("CONTENT_LENGTH") or "0")
+        except ValueError:
+            return _response(
+                start_response, 400, {"error": "Invalid Content-Length header."}
+            )
+        if content_length <= 0 or content_length > carrierpath.MAX_BODY_BYTES:
+            return _response(
+                start_response, 413, {"error": "Request body is missing or too large."}
+            )
+        try:
+            payload = json.loads(environ["wsgi.input"].read(content_length))
+            result = carrierpath.remove_push_subscription(payload)
+        except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
+            return _response(start_response, 400, {"error": str(error)})
+        except sqlite3.Error:
+            return _response(
+                start_response, 500, {"error": "Could not disable study reminders."}
+            )
+        return _response(start_response, 200, result)
 
     if path.startswith("/api/"):
         return _response(start_response, 404, {"error": "Not found."})

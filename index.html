@@ -600,6 +600,38 @@ select:focus, input:focus, textarea:focus {
     margin: auto;
 }
 
+.reminder-panel {
+    margin-top: 24px;
+}
+
+.reminder-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.reminder-status {
+    margin-top: 12px;
+    color: #725967;
+}
+
+.learning-plan {
+    max-width: 1000px;
+    margin: 32px auto 0;
+    padding: 25px;
+    border: 1px solid #f4e3e9;
+    border-radius: 16px;
+    background: white;
+}
+
+.learning-plan ol {
+    padding-left: 24px;
+}
+
+.learning-plan li {
+    margin-top: 9px;
+}
+
 .task {
     background: white;
     padding: 15px;
@@ -1636,6 +1668,36 @@ footer p {
         </div>
         <p id="progressText">0% completed</p>
         <div id="taskList"></div>
+
+        <div class="card reminder-panel">
+            <h3 data-en="🔔 Daily study reminder"
+                data-hi="🔔 रोज़ाना पढ़ाई की रिमाइंडर">🔔 Daily study reminder</h3>
+            <p data-en="Choose a time for a daily reminder. Notifications can arrive even when this website is closed after you enable them."
+               data-hi="रोज़ाना रिमाइंडर के लिए समय चुनें। चालू करने के बाद वेबसाइट बंद होने पर भी नोटिफिकेशन आ सकता है।">
+               Choose a time for a daily reminder. Notifications can arrive even when this website is closed after you enable them.
+            </p>
+            <div class="form-group">
+                <label for="reminderTime" data-en="Reminder time (your local time)"
+                       data-hi="रिमाइंडर का समय (आपका स्थानीय समय)">Reminder time (your local time)</label>
+                <input id="reminderTime" type="time" value="20:00">
+            </div>
+            <div class="reminder-actions">
+                <button id="enableStudyReminder" type="button"
+                        data-en="Enable daily reminder" data-hi="रोज़ाना रिमाइंडर चालू करें">
+                    Enable daily reminder
+                </button>
+                <button id="disableStudyReminder" type="button"
+                        style="background:#725967"
+                        data-en="Turn off reminders" data-hi="रिमाइंडर बंद करें">
+                    Turn off reminders
+                </button>
+            </div>
+            <p id="reminderStatus" class="reminder-status" role="status" aria-live="polite"
+               data-en="Reminders are off. Choose a time and enable notifications."
+               data-hi="रिमाइंडर बंद हैं। समय चुनें और नोटिफिकेशन चालू करें।">
+                Reminders are off. Choose a time and enable notifications.
+            </p>
+        </div>
     </div>
 </section>
 
@@ -1682,30 +1744,114 @@ footer p {
     </div>
 
     <div class="section-heading" style="margin-top:45px">
-        <h2>Free YouTube learning channels</h2>
-        <p>Use these channels to get started, then practise by building your own projects.</p>
+        <h2 data-en="Free YouTube learning channels"
+            data-hi="सीखने के लिए मुफ़्त YouTube चैनल">Free YouTube learning channels</h2>
+        <p data-en="Choose one track, follow a beginner-friendly channel, and practise each lesson."
+           data-hi="एक विषय चुनें, शुरुआती लोगों के लिए चैनल का क्रम से पालन करें और हर पाठ का अभ्यास करें।">
+            Choose one track, follow a beginner-friendly channel, and practise each lesson.
+        </p>
     </div>
     <div class="grid">
         <div class="card">
-            <div class="icon">🐍</div>
-            <h3>Python — CodeWithHarry</h3>
-            <p>Explore beginner Python lessons and practise the examples on your own computer.</p>
-            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer">Visit CodeWithHarry</a>
+            <div class="icon">🌐</div>
+            <h3 data-en="Web development · about 8 weeks"
+                data-hi="वेब डेवलपमेंट · लगभग 8 सप्ताह">Web development · about 8 weeks</h3>
+            <p data-en="Learn HTML, CSS, responsive layouts, and JavaScript. Start with CodeWithHarry in Hindi or freeCodeCamp.org in English."
+               data-hi="HTML, CSS, responsive layout और JavaScript सीखें। हिंदी में CodeWithHarry या अंग्रेज़ी में freeCodeCamp.org से शुरू करें।">
+                Learn HTML, CSS, responsive layouts, and JavaScript. Start with CodeWithHarry in Hindi or freeCodeCamp.org in English.
+            </p>
+            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer"
+               data-en="CodeWithHarry · Hindi" data-hi="CodeWithHarry · हिंदी">CodeWithHarry · Hindi</a>
+            <a class="primary-btn" href="https://www.youtube.com/@freecodecamp" target="_blank" rel="noopener noreferrer"
+               data-en="freeCodeCamp · English" data-hi="freeCodeCamp · अंग्रेज़ी">freeCodeCamp · English</a>
         </div>
 
         <div class="card">
-            <div class="icon">🌐</div>
-            <h3>Web Development — CodeWithHarry</h3>
-            <p>Learn web basics and build small pages with HTML, CSS, and JavaScript.</p>
-            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer">Learn Web Development</a>
+            <div class="icon">🐍</div>
+            <h3 data-en="Python programming · about 6 weeks"
+                data-hi="Python प्रोग्रामिंग · लगभग 6 सप्ताह">Python programming · about 6 weeks</h3>
+            <p data-en="Start with variables, conditions, loops, functions, and small scripts. Follow one course in Hindi or English, then practise without copying."
+               data-hi="Variables, conditions, loops, functions और छोटे scripts से शुरुआत करें। हिंदी या अंग्रेज़ी में एक कोर्स चुनें और बिना कॉपी किए अभ्यास करें।">
+                Start with variables, conditions, loops, functions, and small scripts. Follow one course in Hindi or English, then practise without copying.
+            </p>
+            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer"
+               data-en="CodeWithHarry · Hindi" data-hi="CodeWithHarry · हिंदी">CodeWithHarry · Hindi</a>
+            <a class="primary-btn" href="https://www.youtube.com/@freecodecamp" target="_blank" rel="noopener noreferrer"
+               data-en="freeCodeCamp · English" data-hi="freeCodeCamp · अंग्रेज़ी">freeCodeCamp · English</a>
         </div>
 
         <div class="card">
             <div class="icon">👩‍💻</div>
-            <h3>Programming — Apna College</h3>
-            <p>Explore programming and computer-science lessons, then reinforce them with projects.</p>
-            <a class="primary-btn" href="https://www.youtube.com/@ApnaCollegeOfficial" target="_blank" rel="noopener noreferrer">Visit Apna College</a>
+            <h3 data-en="Programming foundations · about 8–12 weeks"
+                data-hi="प्रोग्रामिंग की बुनियाद · लगभग 8–12 सप्ताह">Programming foundations · about 8–12 weeks</h3>
+            <p data-en="Learn programming problem-solving and computer-science basics. Apna College offers Hindi lessons; freeCodeCamp has English courses."
+               data-hi="प्रोग्रामिंग से समस्या हल करना और कंप्यूटर साइंस की बुनियाद सीखें। Apna College हिंदी में और freeCodeCamp अंग्रेज़ी में पाठ देता है।">
+                Learn programming problem-solving and computer-science basics. Apna College offers Hindi lessons; freeCodeCamp has English courses.
+            </p>
+            <a class="primary-btn" href="https://www.youtube.com/@ApnaCollegeOfficial" target="_blank" rel="noopener noreferrer"
+               data-en="Apna College · Hindi" data-hi="Apna College · हिंदी">Apna College · Hindi</a>
+            <a class="primary-btn" href="https://www.youtube.com/@freecodecamp" target="_blank" rel="noopener noreferrer"
+               data-en="freeCodeCamp · English" data-hi="freeCodeCamp · अंग्रेज़ी">freeCodeCamp · English</a>
         </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3 data-en="Data analytics · about 8–10 weeks"
+                data-hi="डेटा एनालिटिक्स · लगभग 8–10 सप्ताह">Data analytics · about 8–10 weeks</h3>
+            <p data-en="Build skills in spreadsheets, SQL, and dashboards. Alex The Analyst teaches in English; WsCube Tech offers Hindi learning."
+               data-hi="Spreadsheets, SQL और dashboards सीखें। Alex The Analyst अंग्रेज़ी में और WsCube Tech हिंदी में पढ़ाते हैं।">
+                Build skills in spreadsheets, SQL, and dashboards. Alex The Analyst teaches in English; WsCube Tech offers Hindi learning.
+            </p>
+            <a class="primary-btn" href="https://www.youtube.com/@AlexTheAnalyst" target="_blank" rel="noopener noreferrer"
+               data-en="Alex The Analyst · English" data-hi="Alex The Analyst · अंग्रेज़ी">Alex The Analyst · English</a>
+            <a class="primary-btn" href="https://www.youtube.com/@WsCubeTech" target="_blank" rel="noopener noreferrer"
+               data-en="WsCube Tech · Hindi" data-hi="WsCube Tech · हिंदी">WsCube Tech · Hindi</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎨</div>
+            <h3 data-en="Graphic design · about 4–6 weeks"
+                data-hi="ग्राफ़िक डिज़ाइन · लगभग 4–6 सप्ताह">Graphic design · about 4–6 weeks</h3>
+            <p data-en="Practise layout, typography, color, and composition. Try Canva tutorials, then use Satori Graphics to explore design principles."
+               data-hi="Layout, typography, रंग और composition का अभ्यास करें। Canva tutorials से शुरुआत करें और design principles के लिए Satori Graphics देखें।">
+                Practise layout, typography, color, and composition. Try Canva tutorials, then use Satori Graphics to explore design principles.
+            </p>
+            <a class="primary-btn" href="https://www.youtube.com/@Canva" target="_blank" rel="noopener noreferrer"
+               data-en="Canva · English" data-hi="Canva · अंग्रेज़ी">Canva · English</a>
+            <a class="primary-btn" href="https://www.youtube.com/@SatoriGraphics" target="_blank" rel="noopener noreferrer"
+               data-en="Satori Graphics · English" data-hi="Satori Graphics · अंग्रेज़ी">Satori Graphics · English</a>
+        </div>
+    </div>
+
+    <div class="learning-plan">
+        <h3 data-en="A practical weekly learning routine"
+            data-hi="सीखने का व्यावहारिक साप्ताहिक तरीका">A practical weekly learning routine</h3>
+        <p data-en="Plan for 5 days a week, about 45–60 minutes a day (roughly 4–5 hours weekly). Durations are estimates; your pace may differ."
+           data-hi="सप्ताह में 5 दिन, रोज़ लगभग 45–60 मिनट (करीब 4–5 घंटे प्रति सप्ताह) रखें। समय अनुमानित है; आपकी गति अलग हो सकती है।">
+            Plan for 5 days a week, about 45–60 minutes a day (roughly 4–5 hours weekly). Durations are estimates; your pace may differ.
+        </p>
+        <ol>
+            <li data-en="Weeks 1–2: Learn the basics from one beginner playlist and write down key ideas."
+                data-hi="सप्ताह 1–2: एक शुरुआती playlist से बुनियादी बातें सीखें और मुख्य विचार लिखें।">
+                Weeks 1–2: Learn the basics from one beginner playlist and write down key ideas.
+            </li>
+            <li data-en="Weeks 3–4: Practise each concept yourself; pause the video and recreate the example without copying."
+                data-hi="सप्ताह 3–4: हर concept का अभ्यास खुद करें; वीडियो रोककर उदाहरण बिना कॉपी किए दोबारा बनाएँ।">
+                Weeks 3–4: Practise each concept yourself; pause the video and recreate the example without copying.
+            </li>
+            <li data-en="Weeks 5–6: Build a small project that uses several things you learned; ask someone to try it."
+                data-hi="सप्ताह 5–6: सीखी हुई कई चीज़ों से एक छोटा project बनाएँ और किसी से उसे आज़माने को कहें।">
+                Weeks 5–6: Build a small project that uses several things you learned; ask someone to try it.
+            </li>
+            <li data-en="Weeks 7–8: Improve the project, write what you learned, and choose the next skill to practise."
+                data-hi="सप्ताह 7–8: project बेहतर करें, सीखी बातें लिखें और अभ्यास के लिए अगली skill चुनें।">
+                Weeks 7–8: Improve the project, write what you learned, and choose the next skill to practise.
+            </li>
+        </ol>
+        <p data-en="Tip: spend about 20–30 minutes watching, then use the rest of the session to practise. Course and video lengths change; check the current playlists."
+           data-hi="सुझाव: लगभग 20–30 मिनट वीडियो देखें और बाकी समय अभ्यास करें। कोर्स और वीडियो की अवधि बदल सकती है; वर्तमान playlists देखें।">
+            Tip: spend about 20–30 minutes watching, then use the rest of the session to practise. Course and video lengths change; check the current playlists.
+        </p>
     </div>
 </section>
 
@@ -2086,9 +2232,9 @@ footer p {
     </p>
     <p>© 2026 CarrierPath. All rights reserved.</p>
     <p>This website provides educational guidance, not guaranteed career or income outcomes.</p>
-    <p data-en="Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. We do not ask for your name or email. Please do not submit sensitive personal information."
-       data-hi="मार्गदर्शन फ़ॉर्म जमा करने पर आपकी पढ़ाई, रुचियाँ, कौशल, लक्ष्य, बजट और सुझाव वेबसाइट सर्वर पर सहेजे जाते हैं। हम आपका नाम या ईमेल नहीं पूछते। कृपया संवेदनशील निजी जानकारी न भेजें।">
-       Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. We do not ask for your name or email. Please do not submit sensitive personal information.
+    <p data-en="Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. Enabling a daily reminder also saves a browser push subscription, reminder time, and time zone. We do not ask for your name or email. Please do not submit sensitive personal information."
+       data-hi="मार्गदर्शन फ़ॉर्म जमा करने पर आपकी पढ़ाई, रुचियाँ, कौशल, लक्ष्य, बजट और सुझाव वेबसाइट सर्वर पर सहेजे जाते हैं। रोज़ाना रिमाइंडर चालू करने पर ब्राउज़र पुश सब्सक्रिप्शन, रिमाइंडर का समय और समय क्षेत्र भी सहेजा जाता है। हम आपका नाम या ईमेल नहीं पूछते। कृपया संवेदनशील निजी जानकारी न भेजें।">
+       Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. Enabling a daily reminder also saves a browser push subscription, reminder time, and time zone. We do not ask for your name or email. Please do not submit sensitive personal information.
     </p>
     <p>Your dashboard tasks and portfolio are stored in this browser on this device, not on the website server. Clearing browser storage removes them. Do not store sensitive personal information here.</p>
 </footer>
@@ -2108,6 +2254,7 @@ function toggleLanguage() {
         currentLanguage === "en" ? "हिंदी" : "English";
 
     document.documentElement.lang = currentLanguage;
+    refreshReminderStatus();
 }
 
 const careerDatabase = {
@@ -3225,11 +3372,214 @@ function updateProgress() {
     renderStudentDashboard();
 }
 
+<<<<<<< HEAD
 if (savedTasks.error || savedProjects.error) {
     setLocalDataStatus(savedTasks.error || savedProjects.error);
 }
 renderStudentDashboard();
 renderPortfolio();
+=======
+let reminderState = "off";
+let reminderError = "";
+let reminderTimeText = "";
+
+const reminderMessages = {
+    off: {
+        en: "Reminders are off. Choose a time and enable notifications.",
+        hi: "रिमाइंडर बंद हैं। समय चुनें और नोटिफिकेशन चालू करें।"
+    },
+    enabled: {
+        en: "Daily study reminder enabled for ",
+        hi: "रोज़ाना पढ़ाई का रिमाइंडर चालू है: "
+    },
+    denied: {
+        en: "Notification permission was not granted. Allow notifications for this site in your browser, then try again.",
+        hi: "नोटिफिकेशन की अनुमति नहीं मिली। ब्राउज़र में इस साइट के लिए अनुमति देकर फिर कोशिश करें।"
+    },
+    unavailable: {
+        en: "Push reminders need a supported browser and a secure HTTPS website.",
+        hi: "पुश रिमाइंडर के लिए समर्थित ब्राउज़र और सुरक्षित HTTPS वेबसाइट चाहिए।"
+    },
+    working: {
+        en: "Updating your study reminder…",
+        hi: "आपका पढ़ाई रिमाइंडर अपडेट हो रहा है…"
+    }
+};
+
+function refreshReminderStatus() {
+    const status = document.getElementById("reminderStatus");
+    const message = reminderMessages[reminderState];
+    const text = reminderError
+        || `${message[currentLanguage]}${reminderState === "enabled" ? `${reminderTimeText}.` : ""}`;
+    status.textContent = text;
+    status.dataset.en = message.en;
+    status.dataset.hi = message.hi;
+}
+
+function setReminderStatus(state, detail = "") {
+    reminderState = state;
+    reminderError = state === "enabled" ? "" : detail;
+    reminderTimeText = state === "enabled" ? detail : "";
+    refreshReminderStatus();
+}
+
+async function readPushResponse(response, fallbackMessage) {
+    let result;
+    try {
+        result = await response.json();
+    } catch {
+        throw new Error(fallbackMessage);
+    }
+    if (!response.ok) {
+        throw new Error(result.error || fallbackMessage);
+    }
+    return result;
+}
+
+function base64UrlToBytes(value) {
+    const padding = "=".repeat((4 - value.length % 4) % 4);
+    const base64 = (value + padding).replace(/-/g, "+").replace(/_/g, "/");
+    const raw = atob(base64);
+    return Uint8Array.from(raw, character => character.charCodeAt(0));
+}
+
+async function enableStudyReminder() {
+    const button = document.getElementById("enableStudyReminder");
+    button.disabled = true;
+    setReminderStatus("working");
+
+    try {
+        if (
+            !window.isSecureContext
+            || !("Notification" in window)
+            || !("serviceWorker" in navigator)
+            || !("PushManager" in window)
+        ) {
+            setReminderStatus("unavailable");
+            return;
+        }
+
+        if (!document.getElementById("reminderTime").value) {
+            throw new Error("Choose a reminder time first.");
+        }
+
+        let permission = Notification.permission;
+        if (permission === "default") {
+            permission = await Notification.requestPermission();
+        }
+        if (permission !== "granted") {
+            setReminderStatus("denied");
+            return;
+        }
+
+        const keyResponse = await fetch("/api/push/public-key");
+        const keyResult = await readPushResponse(
+            keyResponse,
+            "Could not load push notification settings."
+        );
+        await navigator.serviceWorker.register("/service-worker.js");
+        const readyRegistration = await navigator.serviceWorker.ready;
+        const subscription = await readyRegistration.pushManager.getSubscription()
+            || await readyRegistration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: base64UrlToBytes(keyResult.public_key)
+            });
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const saveResponse = await fetch("/api/push/subscriptions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                subscription: subscription.toJSON(),
+                reminder_time: document.getElementById("reminderTime").value,
+                timezone
+            })
+        });
+        await readPushResponse(saveResponse, "Could not save your study reminder.");
+        localStorage.setItem(
+            "carrierpathStudyReminderTime",
+            document.getElementById("reminderTime").value
+        );
+        setReminderStatus("enabled", document.getElementById("reminderTime").value);
+    } catch (error) {
+        setReminderStatus("off", error.message);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+async function disableStudyReminder() {
+    const button = document.getElementById("disableStudyReminder");
+    button.disabled = true;
+    setReminderStatus("working");
+
+    try {
+        if (!("serviceWorker" in navigator)) {
+            setReminderStatus("unavailable");
+            return;
+        }
+        const registration = await navigator.serviceWorker.getRegistration("/");
+        const subscription = registration
+            ? await registration.pushManager.getSubscription()
+            : null;
+        if (!subscription) {
+            localStorage.removeItem("carrierpathStudyReminderTime");
+            setReminderStatus("off");
+            return;
+        }
+
+        const response = await fetch("/api/push/subscriptions", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ endpoint: subscription.endpoint })
+        });
+        await readPushResponse(response, "Could not disable your study reminder.");
+        await subscription.unsubscribe();
+        localStorage.removeItem("carrierpathStudyReminderTime");
+        setReminderStatus("off");
+    } catch (error) {
+        setReminderStatus("off", error.message);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+async function initializeStudyReminder() {
+    if (
+        !window.isSecureContext
+        || !("Notification" in window)
+        || !("serviceWorker" in navigator)
+        || !("PushManager" in window)
+    ) {
+        setReminderStatus("unavailable");
+        return;
+    }
+
+    try {
+        const savedTime = localStorage.getItem("carrierpathStudyReminderTime");
+        if (savedTime) {
+            document.getElementById("reminderTime").value = savedTime;
+        }
+        await navigator.serviceWorker.register("/service-worker.js");
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        if (subscription) {
+            setReminderStatus("enabled", savedTime || "your saved time");
+        }
+    } catch (error) {
+        setReminderStatus("off", `Could not initialize push reminders: ${error.message}`);
+    }
+}
+
+document.getElementById("enableStudyReminder").addEventListener(
+    "click",
+    enableStudyReminder
+);
+document.getElementById("disableStudyReminder").addEventListener(
+    "click",
+    disableStudyReminder
+);
+initializeStudyReminder();
+>>>>>>> 8d280188c92615d6a2732aa526bac79c7fa573a3
 </script>
 
 </body>
