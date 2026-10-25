@@ -361,6 +361,168 @@ section {
     align-self: flex-end;
 }
 
+.ai-learning-chat {
+    max-width: 900px;
+    margin: 35px auto 0;
+    background: white;
+    border: 1px solid #f1dfe6;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(99, 53, 74, 0.06);
+}
+
+.ai-learning-chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.ai-learning-chat-header h3 {
+    margin-bottom: 6px;
+}
+
+.clear-chat-button {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    background: white;
+    color: var(--primary);
+    border: 1px solid #f0d4df;
+    box-shadow: none;
+}
+
+.clear-chat-button:hover {
+    background: #fff5f7;
+    box-shadow: none;
+}
+
+.ai-learning-prompts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.ai-learning-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    padding: 12px 14px;
+    background: white;
+    color: var(--dark);
+    border: 1px solid #f0d4df;
+    box-shadow: none;
+    text-align: left;
+}
+
+.ai-learning-prompt:hover {
+    background: #fff5f7;
+    color: var(--dark);
+    box-shadow: none;
+}
+
+.ai-learning-prompt span {
+    color: #725967;
+    font-size: 0.78rem;
+    font-weight: 400;
+}
+
+.ai-learning-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 360px;
+    min-height: 180px;
+    overflow-y: auto;
+    padding: 8px 2px;
+}
+
+.ai-learning-message {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ai-learning-message.user {
+    align-items: flex-end;
+}
+
+.ai-learning-message.assistant {
+    align-items: flex-start;
+}
+
+.ai-learning-message .bubble {
+    margin: 0;
+}
+
+.ai-learning-message-meta {
+    padding: 0 6px;
+    color: #806b76;
+    font-size: 0.75rem;
+}
+
+.ai-learning-message.user .ai-learning-message-meta {
+    color: #806b76;
+}
+
+.ai-typing-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #725967;
+}
+
+.ai-typing-dots {
+    display: inline-flex;
+    gap: 3px;
+}
+
+.ai-typing-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: ai-typing-pulse 1s ease-in-out infinite;
+}
+
+.ai-typing-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.ai-typing-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes ai-typing-pulse {
+    0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-typing-dots span {
+        animation: none;
+    }
+}
+
+.ai-learning-composer {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.ai-learning-composer input {
+    flex: 1;
+    min-width: 0;
+}
+
+.ai-learning-note {
+    margin-top: 12px;
+    color: #725967;
+    font-size: 0.88rem;
+}
+
 .advice-list {
     margin-top: 12px;
     padding-left: 18px;
@@ -460,6 +622,258 @@ select:focus, input:focus, textarea:focus {
 .task input:checked + label {
     text-decoration: line-through;
     color: #777;
+}
+
+.dashboard-grid,
+.dashboard-metrics,
+.dashboard-lists,
+.portfolio-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.dashboard-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.dashboard-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 1100px;
+    margin: 0 auto 20px;
+}
+
+.dashboard-lists {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dashboard-panel,
+.dashboard-metric,
+.portfolio-card,
+.quiz-card {
+    min-width: 0;
+    padding: 22px;
+    background: white;
+    border: 1px solid #f1dfe6;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px #63354a0a;
+}
+
+.dashboard-metric strong {
+    display: block;
+    color: var(--primary);
+    font-size: 1.7rem;
+}
+
+.dashboard-metric span,
+.muted-copy {
+    color: #725967;
+}
+
+.dashboard-panel h3 {
+    margin-bottom: 12px;
+}
+
+.dashboard-task-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(150px, 1fr) minmax(150px, 1fr) auto;
+    align-items: end;
+    gap: 12px;
+}
+
+.dashboard-task-form .form-group {
+    min-width: 0;
+    margin: 0;
+}
+
+.dashboard-task-form label,
+.portfolio-form label {
+    font-size: 0.9rem;
+}
+
+.dashboard-task-form input,
+.dashboard-task-form select,
+.portfolio-form input,
+.portfolio-form select,
+.portfolio-form textarea {
+    min-width: 0;
+    padding: 10px;
+}
+
+.dashboard-task-list,
+.dashboard-deadline-list,
+.dashboard-skill-list,
+.portfolio-list {
+    display: grid;
+    gap: 10px;
+}
+
+.dashboard-task-row,
+.dashboard-deadline-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    background: #fff8fa;
+    border: 1px solid #f4e3e9;
+    border-radius: 10px;
+}
+
+.dashboard-task-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+}
+
+.dashboard-task-main input {
+    width: auto;
+    margin-top: 5px;
+}
+
+.dashboard-task-main span {
+    overflow-wrap: anywhere;
+}
+
+.dashboard-task-main small,
+.dashboard-deadline-row small {
+    display: block;
+    color: #725967;
+}
+
+.dashboard-task-row.is-complete .dashboard-task-title {
+    color: #806b76;
+    text-decoration: line-through;
+}
+
+.dashboard-task-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dashboard-task-actions button,
+.portfolio-card button {
+    padding: 7px 10px;
+    font-size: 0.82rem;
+}
+
+.dashboard-task-actions .remove-task-button,
+.portfolio-card .remove-project-button {
+    background: white;
+    color: #8a405d;
+    border: 1px solid #f0d4df;
+    box-shadow: none;
+}
+
+.dashboard-skill {
+    display: inline-flex;
+    width: fit-content;
+    padding: 5px 10px;
+    color: var(--primary);
+    background: #fff0f4;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 650;
+}
+
+.dashboard-next-step {
+    background: linear-gradient(135deg, #fff0f4, #fff9f5);
+    border-left: 4px solid var(--secondary);
+}
+
+.dashboard-next-step p {
+    margin-bottom: 12px;
+}
+
+.portfolio-form {
+    max-width: 850px;
+    margin: 0 auto 24px;
+}
+
+.portfolio-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.portfolio-form .form-group {
+    min-width: 0;
+    margin-bottom: 14px;
+}
+
+.portfolio-form .full-width {
+    grid-column: 1 / -1;
+}
+
+.portfolio-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.portfolio-card h3 {
+    color: var(--primary);
+}
+
+.portfolio-card .portfolio-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.portfolio-card a {
+    overflow-wrap: anywhere;
+}
+
+.quiz-card {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.quiz-question {
+    margin-bottom: 16px;
+}
+
+.quiz-options {
+    display: grid;
+    gap: 10px;
+}
+
+.quiz-answer {
+    width: 100%;
+    background: #fff8fa;
+    color: var(--dark);
+    border: 1px solid #f1dfe6;
+    box-shadow: none;
+    text-align: left;
+}
+
+.quiz-answer:hover:not(:disabled) {
+    color: var(--dark);
+    background: #fff0f4;
+    box-shadow: none;
+}
+
+.quiz-answer:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.quiz-feedback {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #fff5f7;
+}
+
+.quiz-feedback a {
+    color: var(--primary);
+    font-weight: 700;
 }
 
 .progress-bar {
@@ -578,6 +992,14 @@ footer p {
     .advisor-layout {
         grid-template-columns: minmax(0, 1fr);
     }
+
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-task-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 650px) {
@@ -640,6 +1062,35 @@ footer p {
     .advisor-panel,
     .advisor-output {
         padding: 18px;
+    }
+
+    .dashboard-metrics,
+    .dashboard-lists,
+    .portfolio-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-task-form {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-panel,
+    .dashboard-metric,
+    .portfolio-card,
+    .quiz-card {
+        padding: 18px;
+    }
+
+    .ai-learning-chat {
+        padding: 18px;
+    }
+
+    .ai-learning-composer {
+        flex-direction: column;
+    }
+
+    .ai-learning-chat-header {
+        align-items: flex-start;
     }
 
     .path-picker {
@@ -705,10 +1156,14 @@ footer p {
 
     <nav>
         <a href="#home" data-en="Home" data-hi="होम">Home</a>
+        <a href="#dashboard">Dashboard</a>
         <a href="#features" data-en="Features" data-hi="सुविधाएँ">Features</a>
         <a href="#roadmap" data-en="Roadmap" data-hi="रोडमैप">Roadmap</a>
+        <a href="#ai-learning">Learn AI</a>
         <a href="#career" data-en="Career Finder" data-hi="करियर खोजें">Career Finder</a>
         <a href="#study" data-en="Study Planner" data-hi="स्टडी प्लानर">Study Planner</a>
+        <a href="#practice">Practice</a>
+        <a href="#portfolio">Projects</a>
         <a href="#income" data-en="Earn" data-hi="कमाई">Earn</a>
         <button id="languageBtn" onclick="toggleLanguage()">हिंदी</button>
     </nav>
@@ -767,6 +1222,78 @@ footer p {
         <span data-en="Explore Income" data-hi="कमाई के तरीके">Explore Income</span>
     </div>
 </div>
+
+<section id="dashboard">
+    <div class="section-heading">
+        <h2>Your Student Dashboard</h2>
+        <p>Keep track of today’s study tasks, learning progress, deadlines, and what to learn next.</p>
+        <p class="ai-learning-note">Your dashboard is saved only in this browser on this device. No account is needed.</p>
+    </div>
+
+    <div class="dashboard-metrics" aria-live="polite">
+        <article class="dashboard-metric">
+            <strong id="dashboardTodayCount">0</strong>
+            <span>Tasks due today or overdue</span>
+        </article>
+        <article class="dashboard-metric">
+            <strong id="dashboardProgressCount">0%</strong>
+            <span id="dashboardProgressLabel">Learning tasks completed</span>
+        </article>
+        <article class="dashboard-metric">
+            <strong id="dashboardSkillCount">0</strong>
+            <span>Skills in progress</span>
+        </article>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-panel">
+            <h3>Add a study task</h3>
+            <form id="dashboardTaskForm" class="dashboard-task-form">
+                <div class="form-group">
+                    <label for="dashboardTaskTitle">Task or lesson</label>
+                    <input id="dashboardTaskTitle" type="text" maxlength="120" placeholder="e.g. Practise Python loops" required>
+                </div>
+                <div class="form-group">
+                    <label for="dashboardTaskSkill">Skill</label>
+                    <select id="dashboardTaskSkill" required>
+                        <option value="python-basics">Python basics</option>
+                        <option value="python-practice">Python practice</option>
+                        <option value="data-basics">Data and statistics</option>
+                        <option value="ml-basics">Machine learning</option>
+                        <option value="web-development">Web development</option>
+                        <option value="design">Design</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dashboardTaskDeadline">Due date</label>
+                    <input id="dashboardTaskDeadline" type="date" required>
+                </div>
+                <button type="submit">Add task</button>
+            </form>
+
+            <h3 style="margin-top:24px">Today’s study tasks</h3>
+            <div id="dashboardTodayTasks" class="dashboard-task-list" aria-live="polite"></div>
+        </div>
+
+        <div>
+            <article class="dashboard-panel dashboard-next-step">
+                <h3>Recommended next step</h3>
+                <p id="dashboardRecommendation">Start with Python basics, then practise before moving on to machine learning.</p>
+                <button id="addRecommendedTask" type="button">Add this task</button>
+            </article>
+            <article class="dashboard-panel" style="margin-top:18px">
+                <h3>Skills you’re learning</h3>
+                <div id="dashboardSkills" class="dashboard-skill-list" aria-live="polite"></div>
+            </article>
+        </div>
+    </div>
+
+    <article class="dashboard-panel" style="max-width:1100px;margin:18px auto 0">
+        <h3>Upcoming deadlines</h3>
+        <div id="dashboardDeadlines" class="dashboard-deadline-list" aria-live="polite"></div>
+    </article>
+</section>
 
 <section id="features">
     <div class="section-heading">
@@ -1036,9 +1563,9 @@ footer p {
             </div>
 
             <div class="form-group">
-                <label for="skills" data-en="4. Your Current Skills"
+                <label for="currentSkills" data-en="4. Your Current Skills"
                        data-hi="4. आपकी स्किल्स">4. Your Current Skills</label>
-                <select id="skills" required>
+                <select id="currentSkills" required>
                     <option value="">Select your level</option>
                     <option value="beginner">Beginner — No Special Skills</option>
                     <option value="some">I Have Some Skills</option>
@@ -1182,6 +1709,310 @@ footer p {
     </div>
 </section>
 
+<section id="practice">
+    <div class="section-heading">
+        <h2>Practice Zone</h2>
+        <p>Try a short AI and machine-learning quiz. If you miss a question, get a topic to review next.</p>
+    </div>
+    <div class="quiz-card" id="practiceQuiz">
+        <p id="quizProgress" class="muted-copy" aria-live="polite">Question 1 of 5</p>
+        <h3 id="quizQuestion" class="quiz-question"></h3>
+        <div id="quizOptions" class="quiz-options"></div>
+        <div id="quizFeedback" class="quiz-feedback" aria-live="polite" hidden></div>
+        <button id="quizNext" type="button" style="margin-top:14px" disabled>Next question</button>
+    </div>
+</section>
+
+<section id="portfolio" style="background:white">
+    <div class="section-heading">
+        <h2>Project Builder &amp; Portfolio</h2>
+        <p>Choose a small project, save your work, and keep a simple portfolio on this device.</p>
+    </div>
+
+    <div class="grid" style="max-width:1100px;margin:0 auto 24px">
+        <article class="card">
+            <h3>Python basics · Beginner</h3>
+            <p>Build a quiz or number-guessing game. Practise variables, conditions, loops, and functions.</p>
+            <button type="button" class="project-starter" data-title="Python quiz game" data-skill="Python basics">Add project idea</button>
+        </article>
+        <article class="card">
+            <h3>Data skills · Beginner</h3>
+            <p>Make a chart from a small public dataset. Explain the pattern and note any gaps in the data.</p>
+            <button type="button" class="project-starter" data-title="Public data chart" data-skill="Data and statistics">Add project idea</button>
+        </article>
+        <article class="card">
+            <h3>Machine learning · Beginner</h3>
+            <p>Compare a simple classifier on a sample dataset. Test it on examples it did not train on.</p>
+            <button type="button" class="project-starter" data-title="First ML classifier" data-skill="Machine learning">Add project idea</button>
+        </article>
+    </div>
+
+    <form id="portfolioForm" class="portfolio-form">
+        <div class="portfolio-form-grid">
+            <div class="form-group">
+                <label for="projectTitle">Project name</label>
+                <input id="projectTitle" type="text" maxlength="100" required placeholder="e.g. My Python quiz">
+            </div>
+            <div class="form-group">
+                <label for="projectSkill">Skill practiced</label>
+                <select id="projectSkill" required>
+                    <option value="Python basics">Python basics</option>
+                    <option value="Python practice">Python practice</option>
+                    <option value="Data and statistics">Data and statistics</option>
+                    <option value="Machine learning">Machine learning</option>
+                    <option value="Web development">Web development</option>
+                    <option value="Design">Design</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectLevel">Project level</label>
+                <select id="projectLevel" required>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectUrl">Project or GitHub link (optional)</label>
+                <input id="projectUrl" type="url" maxlength="500" placeholder="https://github.com/…">
+            </div>
+            <div class="form-group full-width">
+                <label for="projectDescription">What did you build or learn?</label>
+                <textarea id="projectDescription" rows="3" maxlength="500" placeholder="Describe the project and what you learned."></textarea>
+            </div>
+        </div>
+        <button type="submit">Save to my portfolio</button>
+        <p id="portfolioStatus" class="ai-learning-note" aria-live="polite"></p>
+    </form>
+
+    <div id="portfolioProjects" class="portfolio-grid grid" style="max-width:1100px;margin:0 auto" aria-live="polite"></div>
+</section>
+
+<section id="ai-learning">
+    <div class="section-heading">
+        <h2>Learn AI &amp; Machine Learning</h2>
+        <p>Start with the ideas, build a strong foundation, and learn by making small projects.</p>
+        <p class="ai-learning-note">A strong beginner path is to learn Python, data basics, simple ML, then explain and test your work every week.</p>
+    </div>
+
+    <div class="section-heading" style="margin-top:30px">
+        <h2>AI &amp; ML Personalised 12-Week Roadmap</h2>
+        <p>Follow the plan below in order. Repeat a day if needed, but keep moving forward.</p>
+    </div>
+
+    <div class="grid">
+        <article class="card">
+            <div class="icon">1️⃣</div>
+            <h3>Week 1: Python and AI basics</h3>
+            <p>Learn variables, loops, functions, lists, and conditionals. Start with small Python projects and basic problem-solving.</p>
+        </article>
+        <article class="card">
+            <div class="icon">2️⃣</div>
+            <h3>Week 2: Data and statistics</h3>
+            <p>Work with spreadsheets, simple charts, averages, and probability. Understand missing values, patterns, and data quality.</p>
+        </article>
+        <article class="card">
+            <div class="icon">3️⃣</div>
+            <h3>Week 3: Data cleaning</h3>
+            <p>Clean messy data, check common errors, and learn how to prepare a small dataset for analysis and model training.</p>
+        </article>
+        <article class="card">
+            <div class="icon">4️⃣</div>
+            <h3>Week 4: ML fundamentals</h3>
+            <p>Learn the difference between inputs, labels, training, and testing. Study supervised learning, prediction, and classification.</p>
+        </article>
+        <article class="card">
+            <div class="icon">5️⃣</div>
+            <h3>Week 5: Models and metrics</h3>
+            <p>Train a basic model, compare accuracy, evaluate results, and note where the model fails or needs more data.</p>
+        </article>
+        <article class="card">
+            <div class="icon">6️⃣</div>
+            <h3>Week 6: Evaluate and present</h3>
+            <p>Measure error, choose a dataset, run training, and write a short project summary with findings and limitations.</p>
+        </article>
+        <article class="card">
+            <div class="icon">7️⃣</div>
+            <h3>Week 7: Feature engineering</h3>
+            <p>Improve the input data by representing information more clearly. Test small changes and compare performance.</p>
+        </article>
+        <article class="card">
+            <div class="icon">8️⃣</div>
+            <h3>Week 8: Model tuning</h3>
+            <p>Improve your model, review assumptions, and choose the model that best fits the task without overfitting.</p>
+        </article>
+        <article class="card">
+            <div class="icon">9️⃣</div>
+            <h3>Week 9: Neural networks</h3>
+            <p>Understand neurons, weights, activation functions, and how a simple network turns inputs into outputs.</p>
+        </article>
+        <article class="card">
+            <div class="icon">🔟</div>
+            <h3>Week 10: Deep learning basics</h3>
+            <p>Study layers, loss functions, optimization, and training cycles. Learn the basics without trying to build a huge model too early.</p>
+        </article>
+        <article class="card">
+            <div class="icon">1️⃣1️⃣</div>
+            <h3>Week 11: Generative AI fundamentals</h3>
+            <p>Learn what generative AI is, how LLMs predict text, and how prompting works. Always verify the output and recognise its limitations.</p>
+        </article>
+        <article class="card">
+            <div class="icon">1️⃣2️⃣</div>
+            <h3>Week 12: Final AI project</h3>
+            <p>Plan a study assistant or a simple AI prototype, test it carefully, improve safety, and present your results clearly.</p>
+        </article>
+    </div>
+
+    <div class="section-heading" style="margin-top:45px">
+        <h2>Daily AI learning habits</h2>
+        <p>Use these habits to make real progress and stay consistent.</p>
+    </div>
+    <div class="grid">
+        <article class="card">
+            <h3>Use the 3-2-1 method</h3>
+            <p>Write 3 things you learned, 2 examples, and 1 question each day. This keeps learning active and practical.</p>
+        </article>
+        <article class="card">
+            <h3>Do not copy code blindly</h3>
+            <p>Change the input, modify a condition, and predict the result. Coding is a thinking exercise, not a copy-paste activity.</p>
+        </article>
+        <article class="card">
+            <h3>Explain it in plain language</h3>
+            <p>Teach the concept to yourself out loud or to a friend. If you can explain it simply, you understand it better.</p>
+        </article>
+        <article class="card">
+            <h3>Review and repeat</h3>
+            <p>Repeat the next day and again a few days later. Small practice sessions are more effective than long, passive study.</p>
+        </article>
+    </div>
+
+    <div class="grid">
+        <article class="card">
+            <div class="icon">🤖</div>
+            <h3>What is AI?</h3>
+            <p>Artificial intelligence (AI) is a broad field of making computer systems perform tasks that usually need human-like abilities, such as understanding language, recognizing images, or making recommendations.</p>
+        </article>
+        <article class="card">
+            <div class="icon">📈</div>
+            <h3>What is machine learning?</h3>
+            <p>Machine learning (ML) is one way to build AI. A model learns patterns from examples and uses them to make predictions or decisions. Better data and careful testing matter.</p>
+        </article>
+        <article class="card">
+            <div class="icon">🧩</div>
+            <h3>Key AI ideas</h3>
+            <p>Learn supervised learning (labelled examples), unsupervised learning (finding patterns), and reinforcement learning (learning through feedback). Deep learning uses multi-layer neural networks.</p>
+        </article>
+        <article class="card">
+            <div class="icon">✨</div>
+            <h3>Generative AI</h3>
+            <p>Generative AI creates new text, images, audio, or code from patterns it learned. Its answers can sound convincing and still be incorrect, so check important facts.</p>
+        </article>
+    </div>
+
+    <div class="section-heading" style="margin-top:45px">
+        <h2>Build your foundation</h2>
+        <p>No special background is needed. Learn one step at a time and practise consistently.</p>
+    </div>
+    <div class="grid">
+        <article class="card">
+            <h3>1. Start with Python</h3>
+            <p>Practise variables, conditions, loops, functions, lists, and dictionaries. Write short programs before moving on.</p>
+        </article>
+        <article class="card">
+            <h3>2. Get comfortable with data</h3>
+            <p>Use tables, charts, averages, and basic probability. Learn to spot missing, biased, or unreliable data.</p>
+        </article>
+        <article class="card">
+            <h3>3. Try beginner ML</h3>
+            <p>Explore a small classification or prediction example. Split data into training and test sets and compare the results.</p>
+        </article>
+        <article class="card">
+            <h3>4. Build and explain</h3>
+            <p>Make a tiny project, document what it does, where its data came from, and what it gets wrong. Share only data you have permission to use.</p>
+        </article>
+    </div>
+
+    <div class="section-heading" style="margin-top:45px">
+        <h2>Beginner learning tips</h2>
+        <p>Small, repeatable habits beat trying to learn everything at once.</p>
+    </div>
+    <div class="grid">
+        <article class="card">
+            <h3>Learn actively</h3>
+            <p>Pause lessons and recreate examples without copying. Change one thing and see what happens.</p>
+        </article>
+        <article class="card">
+            <h3>Keep a question notebook</h3>
+            <p>Write down new terms, errors, and what you tried. Explain each idea in your own words.</p>
+        </article>
+        <article class="card">
+            <h3>Build tiny projects</h3>
+            <p>Start with a simple study-time predictor or a hand-labelled image sorter. Make the goal small enough to finish.</p>
+        </article>
+        <article class="card">
+            <h3>Check AI answers</h3>
+            <p>Use AI tools as helpers, not authorities. Verify facts, understand generated code, and protect personal information.</p>
+        </article>
+    </div>
+
+    <div class="section-heading" style="margin-top:45px">
+        <h2>Free YouTube starting points</h2>
+        <p>Use these channels for introductory programming lessons, then practise the examples yourself.</p>
+    </div>
+    <div class="grid">
+        <article class="card">
+            <div class="icon">🐍</div>
+            <h3>CodeWithHarry</h3>
+            <p>Start with Python fundamentals and beginner coding lessons before exploring machine learning.</p>
+            <a class="primary-btn" href="https://www.youtube.com/@CodeWithHarry" target="_blank" rel="noopener noreferrer">Visit CodeWithHarry</a>
+        </article>
+        <article class="card">
+            <div class="icon">👩‍💻</div>
+            <h3>Apna College</h3>
+            <p>Explore programming and computer-science basics to strengthen your foundation for AI and ML.</p>
+            <a class="primary-btn" href="https://www.youtube.com/@ApnaCollegeOfficial" target="_blank" rel="noopener noreferrer">Visit Apna College</a>
+        </article>
+    </div>
+
+    <div class="ai-learning-chat">
+        <div class="ai-learning-chat-header">
+            <div>
+                <h3>Ask the AI Learning Guide</h3>
+                <p>Ask about AI basics, machine learning, beginner projects, or study habits.</p>
+            </div>
+            <button type="button" id="clearAiLearningChat" class="clear-chat-button" aria-label="Clear chat history">Clear chat</button>
+        </div>
+        <div class="ai-learning-prompts" aria-label="Suggested questions">
+            <button type="button" class="ai-learning-prompt" data-question="What is machine learning?">
+                <strong>Explain the basics</strong>
+                <span>What is machine learning?</span>
+            </button>
+            <button type="button" class="ai-learning-prompt" data-question="How should I start learning AI?">
+                <strong>Make a study plan</strong>
+                <span>How should I start learning AI?</span>
+            </button>
+            <button type="button" class="ai-learning-prompt" data-question="Suggest a beginner AI project">
+                <strong>Find a project</strong>
+                <span>Suggest a beginner AI project</span>
+            </button>
+        </div>
+        <div class="ai-chip-row ai-study-actions" aria-label="Study assistant actions">
+            <button type="button" class="ai-chip ai-learning-prompt" data-question="Explain simply: machine learning">Explain simply</button>
+            <button type="button" class="ai-chip ai-learning-prompt" data-question="Give an example of machine learning">Give an example</button>
+            <button type="button" class="ai-chip ai-learning-prompt" data-question="Test me on AI basics">Test me</button>
+            <button type="button" class="ai-chip ai-learning-prompt" data-question="Explain machine learning in Hinglish">Explain in Hinglish</button>
+        </div>
+        <div id="aiLearningMessages" class="ai-learning-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+        <form id="aiLearningForm" class="ai-learning-composer">
+            <label for="aiLearningInput" style="position:absolute;left:-10000px">Ask a question about learning AI</label>
+            <input id="aiLearningInput" type="text" maxlength="300" placeholder="Ask a beginner AI question…" autocomplete="off" required>
+            <button id="aiLearningSend" type="submit">Send</button>
+        </form>
+        <p class="ai-learning-note">This is a local, curated guide, not ChatGPT or a generative AI model. Replies come from built-in learning material; your messages are not sent to a server.</p>
+    </div>
+</section>
+
 <section id="income" style="background:white">
     <div class="section-heading">
         <h2 data-en="💰 Explore Income Opportunities"
@@ -1259,6 +2090,7 @@ footer p {
        data-hi="मार्गदर्शन फ़ॉर्म जमा करने पर आपकी पढ़ाई, रुचियाँ, कौशल, लक्ष्य, बजट और सुझाव वेबसाइट सर्वर पर सहेजे जाते हैं। हम आपका नाम या ईमेल नहीं पूछते। कृपया संवेदनशील निजी जानकारी न भेजें।">
        Submitting a guidance form saves your education, interests, skills, goals, budget choices, and recommendation on the website server. We do not ask for your name or email. Please do not submit sensitive personal information.
     </p>
+    <p>Your dashboard tasks and portfolio are stored in this browser on this device, not on the website server. Clearing browser storage removes them. Do not store sensitive personal information here.</p>
 </footer>
 
 <script>
@@ -1526,7 +2358,7 @@ document.getElementById('aiAdvisorForm').addEventListener('submit', async functi
     }
 });
 
-document.querySelectorAll('.ai-chip').forEach(chip => {
+document.querySelectorAll('#aiAdvisorForm .ai-chip').forEach(chip => {
     chip.addEventListener('click', function() {
         const quick = this.dataset.quick;
         const formValue = { technology: 'tech', business: 'business', creative: 'creative', health: 'health' };
@@ -1548,7 +2380,7 @@ document.getElementById("careerForm").addEventListener("submit", async function(
     const education = document.getElementById("education").value;
     const stream = document.getElementById("stream").value;
     const interest = document.getElementById("interest").value;
-    const skills = document.getElementById("skills").value;
+    const skills = document.getElementById("currentSkills").value;
     const budget = document.getElementById("budget").value;
     const goal = document.getElementById("goal").value;
 
@@ -1597,54 +2429,807 @@ function showSkills() {
     document.getElementById("skills").scrollIntoView({ behavior: "smooth" });
 }
 
-let taskCount = 0;
+let aiLearningQuizAwaitingAnswer = false;
+
+function getAiLearningAnswer(question) {
+    const text = question.toLowerCase();
+    if (aiLearningQuizAwaitingAnswer) {
+        if (/\b(a|unlabelled|without labels|find patterns)\b/.test(text)) {
+            return "Not quite. That describes unsupervised learning, which looks for patterns without provided labels. The correct answer is B: supervised learning uses labelled examples.";
+        }
+        if (/\b(b|supervised|labelled|labeled|known answers)\b/.test(text)) {
+            aiLearningQuizAwaitingAnswer = false;
+            return "Correct! Supervised learning uses examples with known labels. You can try more questions in the Practice Zone below.";
+        }
+        if (/\b(c|reward|trial and error|feedback)\b/.test(text)) {
+            aiLearningQuizAwaitingAnswer = false;
+            return "Not quite. Learning from rewards or feedback describes reinforcement learning. The correct answer is B: supervised learning uses labelled examples.";
+        }
+        return "Choose A, B, or C, or answer “supervised learning” to continue the quick quiz.";
+    }
+    if (/\bhinglish\b/.test(text)) {
+        return "Machine learning, AI ka ek hissa hai. Isme computer examples se patterns seekhta hai aur naye data ke baare mein prediction karta hai. Jaise labelled flower data se model naye flower ki category bata sakta hai. Important results ko hamesha verify karein.";
+    }
+    if (/\btest me|quiz me|ask me a question\b/.test(text)) {
+        aiLearningQuizAwaitingAnswer = true;
+        return "Quick quiz: A model learns from examples that already have the correct answers. What type of learning is this? A) Unsupervised learning  B) Supervised learning  C) Reinforcement learning. Reply with A, B, or C.";
+    }
+    if (/\bexplain simply|simple words|in simple\b/.test(text)) {
+        return "In simple words, machine learning is a way for computers to learn patterns from examples. The computer uses those patterns to make a guess about new information.";
+    }
+    if (/\bexample of|give an example\b/.test(text)) {
+        return "For example, show a model many labelled photos of cats and dogs. It can learn patterns from those examples and then predict whether a new photo looks more like a cat or a dog. Its prediction can still be wrong, so it needs testing.";
+    }
+    if (/\b(classification|classify|categor(y|ies)|label(s|led)?)\b/.test(text)) {
+        return "Classification is a supervised machine-learning task that predicts a category, such as sorting messages into spam and not spam. A model learns from examples with known labels. Test it on examples it has not seen, and check which kinds of mistakes it makes.";
+    }
+    if (/\b(regression|predict(ion|ing)? a number|continuous value)\b/.test(text)) {
+        return "Regression is a supervised machine-learning task that predicts a number, such as a house price or travel time. Compare predictions with known values using an error measure, and keep a separate test set to see how well the model generalizes.";
+    }
+    if (/\b(overfit(ting)?|underfit(ting)?)\b/.test(text)) {
+        return "Overfitting happens when a model memorizes training examples and performs poorly on new data. Underfitting means it has not learned the important pattern yet. Compare training and test results, keep your model simple at first, and collect representative data.";
+    }
+    if (/\b(accuracy|precision|recall|f1 score|metrics?)\b/.test(text)) {
+        return "Accuracy is the share of predictions that are correct, but it can hide important mistakes when classes are imbalanced. Precision asks how many positive predictions were correct; recall asks how many actual positives were found. Choose a metric that fits the real problem.";
+    }
+    if (/\b(machine learning|learn(ing)? machine|ml)\b/.test(text)) {
+        return "Machine learning is a part of AI where a model finds patterns in examples and uses them to make predictions. For example, a model can learn from labelled flower measurements to classify a new flower. Start with Python, simple datasets, and the difference between training and test data.";
+    }
+    if (/\b(supervised|unsupervised|reinforcement)\b/.test(text)) {
+        return "Supervised learning uses examples with known answers; unsupervised learning looks for patterns without supplied labels; reinforcement learning learns from actions and feedback. Try to identify which kind of feedback a real example uses.";
+    }
+    if (/\b(generative|chatgpt|large language|llm)\b/.test(text)) {
+        return "Generative AI creates content such as text or images by learning patterns from data. A chatbot can be useful for explanations and practice questions, but it may invent facts. Check important answers with reliable sources and avoid sharing private information.";
+    }
+    if (/\b(neural network|deep learning)\b/.test(text)) {
+        return "A neural network is a model made of connected layers that transform input data to produce an output. Deep learning uses neural networks with multiple layers and often needs substantial data and computing power. You can learn the idea first without building a large model.";
+    }
+    if (/\b(project|build|make|ideas?)\b/.test(text)) {
+        return "Try a tiny project: collect a few rows of clean, non-sensitive data, make a simple prediction or category rule, and test it on examples you did not use while building. Compare mistakes, write down limitations, and explain your result. You can begin with a rule-based project before using an ML library.";
+    }
+    if (/\b(12.?week|roadmap|weekly plan|study plan|schedule)\b/.test(text)) {
+        return "Follow the 12-week roadmap on this page: Weeks 1–3 cover Python, data, statistics, and data cleaning; Weeks 4–6 introduce ML models, testing, metrics, and presenting a project; Weeks 7–8 focus on features and model tuning; Weeks 9–10 introduce neural networks and deep learning; Week 11 covers generative AI; and Week 12 is for a final project. Repeat a week when you need more practice.";
+    }
+    if (/\b(python|coding|programming|code)\b/.test(text)) {
+        return "Begin with Python variables, strings and numbers, if-statements, loops, functions, and lists. Practise each with a small program, such as a quiz or number guessing game. Once comfortable, try reading a small dataset and making a chart.";
+    }
+    if (/\b(tip|trick|habit|study|learn|start|beginner|roadmap|12.?week)\b/.test(text)) {
+        return "Use the 12-week roadmap above as a guide: begin with Python basics, then data and statistics before trying a small model. Study in short regular sessions, code along without copying, keep notes on errors, and review what you learned each week. Adjust the pace or repeat a week when needed.";
+    }
+    if (/\b(youtube|video|channel|harry|apna)\b/.test(text)) {
+        return "CodeWithHarry and Apna College are useful starting points for Python and programming fundamentals. Follow a beginner lesson, pause to write the code yourself, then make a small variation. For ML lessons, check that the content is current and includes hands-on practice.";
+    }
+    if (/\b(data|dataset|spreadsheet|statistics|probability)\b/.test(text)) {
+        return "Start with a small table: identify columns, units, missing values, and possible errors. Practise averages, percentages, simple charts, and probability. Keep the data source and privacy in mind, and do not use private personal records in a public project.";
+    }
+    if (/\b(feature|use|capabilit|limitation|risk|bias|ethical|responsib)\b/.test(text)) {
+        return "AI systems can classify, predict, recommend, recognize patterns, or generate content. They depend on data and design choices, can make mistakes or reflect bias, and do not replace human judgement. Check the source, privacy, and consequences before using an AI result.";
+    }
+    if (/\b(what is ai|define ai|artificial intelligence|ai basics)\b/.test(text)) {
+        return "Artificial intelligence (AI) is a broad field focused on computer systems performing tasks such as recognizing patterns, understanding language, or making recommendations. Machine learning is one approach within AI; generative AI is a family of systems that creates new content.";
+    }
+    return "I can help with AI and ML definitions, learning types, Python starting points, beginner project ideas, study tips, and responsible AI use. Try asking, “What is AI?”, “How do I start learning machine learning?”, or “Suggest a beginner project.”";
+}
+
+const AI_LEARNING_WELCOME = "Hi! I can explain AI and ML basics, help you follow the 12-week roadmap, and suggest beginner projects. Ask me a question to get started.";
+let aiLearningBusy = false;
+
+function appendAiLearningMessage(role, text) {
+    const messages = document.getElementById("aiLearningMessages");
+    const message = document.createElement("div");
+    message.className = `ai-learning-message ${role}`;
+
+    const bubble = document.createElement("div");
+    bubble.className = `bubble ${role}`;
+    bubble.textContent = text;
+    message.appendChild(bubble);
+
+    const sentAt = new Date();
+    const timestamp = document.createElement("time");
+    timestamp.className = "ai-learning-message-meta";
+    timestamp.dateTime = sentAt.toISOString();
+    timestamp.textContent = `${role === "user" ? "You" : "AI Learning Guide"} · ${sentAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+    message.appendChild(timestamp);
+    messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;
+    return message;
+}
+
+function addAiLearningTypingIndicator() {
+    const messages = document.getElementById("aiLearningMessages");
+    const indicator = document.createElement("div");
+    indicator.className = "ai-learning-message assistant";
+    indicator.setAttribute("role", "status");
+    indicator.setAttribute("aria-label", "Preparing a topic-matched guide");
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble assistant ai-typing-indicator";
+    bubble.textContent = "Preparing a topic-matched guide";
+
+    const dots = document.createElement("span");
+    dots.className = "ai-typing-dots";
+    dots.setAttribute("aria-hidden", "true");
+    for (let index = 0; index < 3; index += 1) {
+        dots.appendChild(document.createElement("span"));
+    }
+    bubble.appendChild(dots);
+    indicator.appendChild(bubble);
+    messages.appendChild(indicator);
+    messages.scrollTop = messages.scrollHeight;
+    return indicator;
+}
+
+function setAiLearningBusy(busy) {
+    aiLearningBusy = busy;
+    document.getElementById("aiLearningInput").disabled = busy;
+    document.getElementById("aiLearningSend").disabled = busy;
+    document.getElementById("clearAiLearningChat").disabled = busy;
+    document.querySelectorAll(".ai-learning-prompt").forEach(button => {
+        button.disabled = busy;
+    });
+}
+
+async function sendAiLearningMessage(question) {
+    if (aiLearningBusy) {
+        return;
+    }
+
+    setAiLearningBusy(true);
+    appendAiLearningMessage("user", question);
+    const typingIndicator = addAiLearningTypingIndicator();
+    try {
+        await new Promise(resolve => window.setTimeout(resolve, 450));
+        typingIndicator.replaceWith(
+            appendAiLearningMessage("assistant", getAiLearningAnswer(question))
+        );
+    } finally {
+        if (typingIndicator.isConnected) {
+            typingIndicator.remove();
+        }
+        setAiLearningBusy(false);
+        document.getElementById("aiLearningInput").focus();
+    }
+}
+
+function resetAiLearningChat() {
+    const messages = document.getElementById("aiLearningMessages");
+    messages.replaceChildren();
+    appendAiLearningMessage("assistant", AI_LEARNING_WELCOME);
+}
+
+document.getElementById("aiLearningForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const input = document.getElementById("aiLearningInput");
+    const question = input.value.trim();
+    if (!question || aiLearningBusy) {
+        return;
+    }
+    await sendAiLearningMessage(question);
+    input.value = "";
+    input.focus();
+});
+
+document.querySelectorAll(".ai-learning-prompt").forEach(button => {
+    button.addEventListener("click", async function() {
+        await sendAiLearningMessage(this.dataset.question);
+    });
+});
+
+document.getElementById("clearAiLearningChat").addEventListener("click", resetAiLearningChat);
+resetAiLearningChat();
+
+const practiceQuestions = [
+    {
+        prompt: "Which statement best describes machine learning?",
+        options: [
+            "A computer learns patterns from examples to make predictions.",
+            "A computer always follows only fixed instructions.",
+            "A computer understands every answer like a person."
+        ],
+        answer: 0,
+        explanation: "Machine-learning models use examples to learn patterns and make predictions. They can still make mistakes.",
+        review: "Review the “What is machine learning?” lesson."
+    },
+    {
+        prompt: "What does supervised learning use during training?",
+        options: [
+            "Only data with no examples.",
+            "Examples paired with known labels or answers.",
+            "Only rewards from a game."
+        ],
+        answer: 1,
+        explanation: "Supervised learning learns from examples that include the correct label or answer.",
+        review: "Review the “Key AI ideas” lesson."
+    },
+    {
+        prompt: "Why should a model be tested on data it did not train on?",
+        options: [
+            "To make its training file bigger.",
+            "To check how it may perform on new examples.",
+            "To guarantee that every prediction is correct."
+        ],
+        answer: 1,
+        explanation: "A separate test set helps check whether a model can generalize to new examples.",
+        review: "Review Week 4: ML fundamentals in the roadmap."
+    },
+    {
+        prompt: "What is one risk of overfitting?",
+        options: [
+            "The model memorizes training examples and struggles on new data.",
+            "The model becomes fair for every group automatically.",
+            "The model no longer needs data."
+        ],
+        answer: 0,
+        explanation: "An overfit model can memorize training data but perform poorly on examples it has not seen.",
+        review: "Review Week 8: Model tuning in the roadmap."
+    },
+    {
+        prompt: "What should you do before trusting an AI-generated answer?",
+        options: [
+            "Assume it is correct if it sounds confident.",
+            "Share private information so it can improve.",
+            "Check important claims against reliable sources."
+        ],
+        answer: 2,
+        explanation: "Generative AI can produce convincing but incorrect content, so verify important claims.",
+        review: "Review the “Generative AI” lesson."
+    }
+];
+let practiceQuestionIndex = 0;
+let practiceScore = 0;
+let practiceAnswered = false;
+
+function renderPracticeQuestion() {
+    const question = practiceQuestions[practiceQuestionIndex];
+    const options = document.getElementById("quizOptions");
+    const feedback = document.getElementById("quizFeedback");
+    const nextButton = document.getElementById("quizNext");
+
+    document.getElementById("quizProgress").textContent =
+        `Question ${practiceQuestionIndex + 1} of ${practiceQuestions.length} · Score ${practiceScore}`;
+    document.getElementById("quizQuestion").textContent = question.prompt;
+    options.replaceChildren();
+    feedback.replaceChildren();
+    feedback.hidden = true;
+    nextButton.disabled = true;
+    nextButton.textContent = practiceQuestionIndex === practiceQuestions.length - 1
+        ? "See results"
+        : "Next question";
+    practiceAnswered = false;
+
+    question.options.forEach((optionText, optionIndex) => {
+        const answer = document.createElement("button");
+        answer.type = "button";
+        answer.className = "quiz-answer";
+        answer.textContent = `${String.fromCharCode(65 + optionIndex)}. ${optionText}`;
+        answer.addEventListener("click", function() {
+            if (practiceAnswered) {
+                return;
+            }
+            practiceAnswered = true;
+            const isCorrect = optionIndex === question.answer;
+            if (isCorrect) {
+                practiceScore += 1;
+            }
+            options.querySelectorAll("button").forEach(button => {
+                button.disabled = true;
+            });
+            document.getElementById("quizProgress").textContent =
+                `Question ${practiceQuestionIndex + 1} of ${practiceQuestions.length} · Score ${practiceScore}`;
+            feedback.hidden = false;
+            const result = document.createElement("p");
+            result.textContent = `${isCorrect ? "Correct! " : "Not quite. "}${question.explanation}`;
+            feedback.appendChild(result);
+            if (!isCorrect) {
+                const review = document.createElement("p");
+                review.textContent = `${question.review} `;
+                const link = document.createElement("a");
+                link.href = "#ai-learning";
+                link.textContent = "Review the AI lessons";
+                review.appendChild(link);
+                feedback.appendChild(review);
+            }
+            nextButton.disabled = false;
+        });
+        options.appendChild(answer);
+    });
+}
+
+document.getElementById("quizNext").addEventListener("click", function() {
+    if (practiceQuestionIndex < practiceQuestions.length - 1) {
+        practiceQuestionIndex += 1;
+        renderPracticeQuestion();
+        return;
+    }
+    if (this.textContent === "Restart quiz") {
+        practiceQuestionIndex = 0;
+        practiceScore = 0;
+        renderPracticeQuestion();
+        return;
+    }
+
+    document.getElementById("quizProgress").textContent =
+        `Quiz complete · ${practiceScore} of ${practiceQuestions.length} correct`;
+    document.getElementById("quizQuestion").textContent =
+        practiceScore === practiceQuestions.length
+            ? "Excellent work! You got every question right."
+            : "Nice effort. Review the suggested lessons and try the quiz again.";
+    document.getElementById("quizOptions").replaceChildren();
+    document.getElementById("quizFeedback").hidden = true;
+    this.disabled = false;
+    this.textContent = "Restart quiz";
+});
+
+renderPracticeQuestion();
+
+function renderPortfolio() {
+    const container = document.getElementById("portfolioProjects");
+    container.replaceChildren();
+    if (!portfolioProjects.length) {
+        const empty = document.createElement("p");
+        empty.className = "muted-copy";
+        empty.textContent = "Your saved projects will appear here. They are stored only in this browser.";
+        container.appendChild(empty);
+        return;
+    }
+
+    portfolioProjects.forEach(project => {
+        const card = document.createElement("article");
+        card.className = "portfolio-card";
+        const title = document.createElement("h3");
+        title.textContent = project.title;
+        const metadata = document.createElement("p");
+        metadata.className = "muted-copy";
+        metadata.textContent = `${project.level} · ${project.skill}${project.completed ? " · Completed" : " · In progress"}`;
+        card.append(title, metadata);
+        if (project.description) {
+            const description = document.createElement("p");
+            description.textContent = project.description;
+            card.appendChild(description);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "portfolio-actions";
+        const statusLabel = document.createElement("label");
+        const completed = document.createElement("input");
+        completed.type = "checkbox";
+        completed.checked = project.completed;
+        completed.setAttribute("aria-label", `Mark ${project.title} ${project.completed ? "in progress" : "completed"}`);
+        completed.addEventListener("change", function() {
+            project.completed = completed.checked;
+            savePortfolioProjects();
+            renderPortfolio();
+            renderStudentDashboard();
+        });
+        statusLabel.append(completed, document.createTextNode(" Completed"));
+        actions.appendChild(statusLabel);
+
+        if (project.url) {
+            try {
+                const url = new URL(project.url);
+                if (url.protocol === "https:" || url.protocol === "http:") {
+                    const link = document.createElement("a");
+                    link.href = url.href;
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    link.textContent = "View project";
+                    actions.appendChild(link);
+                }
+            } catch (error) {
+                const invalidLink = document.createElement("span");
+                invalidLink.className = "muted-copy";
+                invalidLink.textContent = "Project link is invalid.";
+                actions.appendChild(invalidLink);
+            }
+        }
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-project-button";
+        remove.textContent = "Remove";
+        remove.setAttribute("aria-label", `Remove ${project.title} from portfolio`);
+        remove.addEventListener("click", function() {
+            portfolioProjects = portfolioProjects.filter(item => item.id !== project.id);
+            savePortfolioProjects();
+            renderPortfolio();
+            renderStudentDashboard();
+        });
+        actions.appendChild(remove);
+        card.appendChild(actions);
+        container.appendChild(card);
+    });
+}
+
+document.getElementById("portfolioForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const title = document.getElementById("projectTitle");
+    const skill = document.getElementById("projectSkill");
+    const level = document.getElementById("projectLevel");
+    const description = document.getElementById("projectDescription");
+    const urlInput = document.getElementById("projectUrl");
+    let projectUrl = urlInput.value.trim();
+
+    if (projectUrl) {
+        try {
+            const parsedUrl = new URL(projectUrl);
+            if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") {
+                throw new Error("Use an http or https project link.");
+            }
+            projectUrl = parsedUrl.href;
+        } catch (error) {
+            document.getElementById("portfolioStatus").textContent =
+                "Enter a valid project URL that starts with http:// or https://.";
+            urlInput.focus();
+            return;
+        }
+    }
+
+    portfolioProjects.push({
+        id: createTaskId(),
+        title: title.value.trim(),
+        skill: skill.value,
+        level: level.value,
+        description: description.value.trim(),
+        url: projectUrl,
+        completed: false
+    });
+    if (savePortfolioProjects()) {
+        this.reset();
+        document.getElementById("portfolioStatus").textContent = "Project saved to your portfolio on this device.";
+    }
+    renderPortfolio();
+    renderStudentDashboard();
+});
+
+document.querySelectorAll(".project-starter").forEach(button => {
+    button.addEventListener("click", function() {
+        document.getElementById("projectTitle").value = this.dataset.title;
+        const skillOptions = [...document.getElementById("projectSkill").options];
+        const matchingSkill = skillOptions.find(option => option.value.toLowerCase() === this.dataset.skill.toLowerCase());
+        if (matchingSkill) {
+            document.getElementById("projectSkill").value = matchingSkill.value;
+        }
+        document.getElementById("projectDescription").focus();
+        document.getElementById("portfolioForm").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+});
+
+const STUDENT_TASKS_KEY = "carrierpath.studentTasks.v1";
+const PORTFOLIO_KEY = "carrierpath.portfolio.v1";
+const SKILL_LABELS = {
+    "python-basics": "Python basics",
+    "python-practice": "Python practice",
+    "data-basics": "Data and statistics",
+    "ml-basics": "Machine learning",
+    "web-development": "Web development",
+    design: "Design",
+    other: "Other"
+};
+const NEXT_LEARNING_STEPS = [
+    {
+        skill: "python-basics",
+        title: "Learn Python basics",
+        description: "Start with variables, conditions, loops, and functions before taking on machine learning."
+    },
+    {
+        skill: "python-practice",
+        title: "Practise Python with a small program",
+        description: "You completed Python basics. Build a short quiz or number-guessing game before moving on to ML."
+    },
+    {
+        skill: "data-basics",
+        title: "Learn data and statistics basics",
+        description: "Practise tables, charts, averages, and data quality before training an ML model."
+    },
+    {
+        skill: "ml-basics",
+        title: "Explore machine-learning basics",
+        description: "Now practise training and testing a simple model with a small, non-sensitive dataset."
+    },
+    {
+        skill: "ml-basics",
+        title: "Build and explain a small ML project",
+        description: "Try a beginner project, check its mistakes, and explain what it cannot do."
+    }
+];
+
+function readSavedList(key, isValidItem) {
+    try {
+        const saved = localStorage.getItem(key);
+        if (saved === null) {
+            return { items: [], error: "" };
+        }
+        const parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed) || !parsed.every(isValidItem)) {
+            throw new Error("Saved data is not in the expected format.");
+        }
+        return { items: parsed, error: "" };
+    } catch (error) {
+        return { items: [], error: `Could not load saved dashboard data: ${error.message}` };
+    }
+}
+
+function isSavedTask(task) {
+    return task && typeof task.id === "string" &&
+        typeof task.title === "string" && typeof task.skill === "string" &&
+        typeof task.dueDate === "string" && typeof task.completed === "boolean";
+}
+
+function isSavedProject(project) {
+    return project && typeof project.id === "string" &&
+        typeof project.title === "string" && typeof project.skill === "string" &&
+        typeof project.level === "string" && typeof project.description === "string" &&
+        typeof project.url === "string" && typeof project.completed === "boolean";
+}
+
+const savedTasks = readSavedList(STUDENT_TASKS_KEY, isSavedTask);
+const savedProjects = readSavedList(PORTFOLIO_KEY, isSavedProject);
+let studentTasks = savedTasks.items;
+let portfolioProjects = savedProjects.items;
+
+function setLocalDataStatus(message) {
+    const portfolioStatus = document.getElementById("portfolioStatus");
+    if (portfolioStatus) {
+        portfolioStatus.textContent = message;
+    }
+}
+
+function saveStudentTasks() {
+    try {
+        localStorage.setItem(STUDENT_TASKS_KEY, JSON.stringify(studentTasks));
+        return true;
+    } catch (error) {
+        setLocalDataStatus(`Could not save your study tasks on this device: ${error.message}`);
+        return false;
+    }
+}
+
+function savePortfolioProjects() {
+    try {
+        localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(portfolioProjects));
+        return true;
+    } catch (error) {
+        setLocalDataStatus(`Could not save your portfolio on this device: ${error.message}`);
+        return false;
+    }
+}
+
+function localDateString(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+function createTaskId() {
+    return typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function formatTaskDate(dateString) {
+    const date = new Date(`${dateString}T00:00:00`);
+    return Number.isNaN(date.getTime())
+        ? "Date unavailable"
+        : date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
+function createTaskRow(task, overdue = false) {
+    const row = document.createElement("div");
+    row.className = `dashboard-task-row${task.completed ? " is-complete" : ""}`;
+
+    const main = document.createElement("label");
+    main.className = "dashboard-task-main";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+    checkbox.setAttribute("aria-label", `Mark ${task.title} ${task.completed ? "incomplete" : "complete"}`);
+    checkbox.addEventListener("change", function() {
+        task.completed = checkbox.checked;
+        saveStudentTasks();
+        renderStudentDashboard();
+    });
+
+    const details = document.createElement("span");
+    const title = document.createElement("span");
+    title.className = "dashboard-task-title";
+    title.textContent = task.title;
+    const metadata = document.createElement("small");
+    metadata.textContent = `${SKILL_LABELS[task.skill] || task.skill} · ${overdue ? "Overdue" : "Due"} ${formatTaskDate(task.dueDate)}`;
+    details.append(title, metadata);
+    main.append(checkbox, details);
+
+    const actions = document.createElement("div");
+    actions.className = "dashboard-task-actions";
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "remove-task-button";
+    remove.textContent = "Remove";
+    remove.setAttribute("aria-label", `Remove ${task.title}`);
+    remove.addEventListener("click", function() {
+        studentTasks = studentTasks.filter(item => item.id !== task.id);
+        saveStudentTasks();
+        renderStudentDashboard();
+    });
+
+    actions.appendChild(remove);
+    row.append(main, actions);
+    return row;
+}
+
+function getNextLearningStep() {
+    const completedSkills = new Set(studentTasks.filter(task => task.completed).map(task => task.skill));
+    const stepIndex = NEXT_LEARNING_STEPS.findIndex(step => !completedSkills.has(step.skill));
+    return NEXT_LEARNING_STEPS[stepIndex === -1 ? NEXT_LEARNING_STEPS.length - 1 : stepIndex];
+}
+
+function getPortfolioSkillLabel(skill) {
+    const normalized = skill.toLowerCase();
+    if (normalized === "python basics") return SKILL_LABELS["python-basics"];
+    if (normalized === "python practice") return SKILL_LABELS["python-practice"];
+    if (normalized === "data and statistics") return SKILL_LABELS["data-basics"];
+    if (normalized === "machine learning") return SKILL_LABELS["ml-basics"];
+    if (normalized === "web development") return SKILL_LABELS["web-development"];
+    if (normalized === "design") return SKILL_LABELS.design;
+    return skill;
+}
+
+function renderStudentDashboard() {
+    const today = localDateString();
+    const openTasks = studentTasks.filter(task => !task.completed);
+    const completedCount = studentTasks.length - openTasks.length;
+    const percentage = studentTasks.length
+        ? Math.round(completedCount / studentTasks.length * 100)
+        : 0;
+    const todayTasks = studentTasks
+        .filter(task => !task.completed && task.dueDate <= today)
+        .sort((first, second) => first.dueDate.localeCompare(second.dueDate));
+    const upcomingTasks = studentTasks
+        .filter(task => !task.completed && task.dueDate > today)
+        .sort((first, second) => first.dueDate.localeCompare(second.dueDate));
+
+    document.getElementById("dashboardTodayCount").textContent = String(todayTasks.length);
+    document.getElementById("dashboardProgressCount").textContent = `${percentage}%`;
+    document.getElementById("dashboardProgressLabel").textContent =
+        `${completedCount} of ${studentTasks.length} learning tasks completed`;
+    const activeSkills = new Set([
+        ...openTasks.map(task => SKILL_LABELS[task.skill] || task.skill),
+        ...portfolioProjects.filter(project => !project.completed)
+            .map(project => getPortfolioSkillLabel(project.skill))
+    ]);
+    document.getElementById("dashboardSkillCount").textContent = String(activeSkills.size);
+
+    const todayContainer = document.getElementById("dashboardTodayTasks");
+    todayContainer.replaceChildren();
+    if (todayTasks.length) {
+        todayTasks.forEach(task => todayContainer.appendChild(createTaskRow(task, task.dueDate < today)));
+    } else {
+        const empty = document.createElement("p");
+        empty.className = "muted-copy";
+        empty.textContent = "No tasks due today. Add a study goal above or enjoy your free time.";
+        todayContainer.appendChild(empty);
+    }
+
+    const deadlines = document.getElementById("dashboardDeadlines");
+    deadlines.replaceChildren();
+    if (upcomingTasks.length) {
+        upcomingTasks.forEach(task => {
+            const row = document.createElement("div");
+            row.className = "dashboard-deadline-row";
+            const details = document.createElement("span");
+            details.textContent = task.title;
+            const date = document.createElement("small");
+            date.textContent = `${SKILL_LABELS[task.skill] || task.skill} · ${formatTaskDate(task.dueDate)}`;
+            const taskInfo = document.createElement("div");
+            taskInfo.append(details, date);
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = task.completed;
+            checkbox.setAttribute("aria-label", `Mark ${task.title} ${task.completed ? "incomplete" : "complete"}`);
+            checkbox.addEventListener("change", function() {
+                task.completed = checkbox.checked;
+                saveStudentTasks();
+                renderStudentDashboard();
+            });
+            row.append(taskInfo, checkbox);
+            deadlines.appendChild(row);
+        });
+    } else {
+        const empty = document.createElement("p");
+        empty.className = "muted-copy";
+        empty.textContent = "Add a task with a future due date to see it here.";
+        deadlines.appendChild(empty);
+    }
+
+    const skillsContainer = document.getElementById("dashboardSkills");
+    skillsContainer.replaceChildren();
+    if (activeSkills.size) {
+        activeSkills.forEach(skill => {
+            const badge = document.createElement("span");
+            badge.className = "dashboard-skill";
+            badge.textContent = skill;
+            skillsContainer.appendChild(badge);
+        });
+    } else {
+        const empty = document.createElement("p");
+        empty.className = "muted-copy";
+        empty.textContent = "Add a task or project to start tracking a skill.";
+        skillsContainer.appendChild(empty);
+    }
+
+    const nextStep = getNextLearningStep();
+    document.getElementById("dashboardRecommendation").textContent = nextStep.description;
+    const addRecommended = document.getElementById("addRecommendedTask");
+    addRecommended.dataset.skill = nextStep.skill;
+    addRecommended.dataset.title = nextStep.title;
+
+    document.getElementById("taskList").replaceChildren(
+        ...studentTasks.map(task => createTaskRow(task, task.dueDate < today))
+    );
+    document.getElementById("progressFill").style.width = `${percentage}%`;
+    document.getElementById("progressText").textContent =
+        `${percentage}% completed (${completedCount}/${studentTasks.length} tasks)`;
+}
+
+function addStudentTask(title, skill, dueDate) {
+    const cleanedTitle = title.trim();
+    if (!cleanedTitle || !Object.hasOwn(SKILL_LABELS, skill) || !dueDate) {
+        setLocalDataStatus("Enter a task, choose a skill, and select a due date.");
+        return false;
+    }
+    studentTasks.push({
+        id: createTaskId(),
+        title: cleanedTitle,
+        skill,
+        dueDate,
+        completed: false
+    });
+    const saved = saveStudentTasks();
+    renderStudentDashboard();
+    return saved;
+}
+
+document.getElementById("dashboardTaskDeadline").value = localDateString();
+document.getElementById("dashboardTaskDeadline").min = localDateString();
+
+document.getElementById("dashboardTaskForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const title = document.getElementById("dashboardTaskTitle");
+    const skill = document.getElementById("dashboardTaskSkill");
+    const deadline = document.getElementById("dashboardTaskDeadline");
+    if (addStudentTask(title.value, skill.value, deadline.value)) {
+        title.value = "";
+        setLocalDataStatus("Task saved in this browser.");
+    }
+});
+
+document.getElementById("addRecommendedTask").addEventListener("click", function() {
+    if (addStudentTask(this.dataset.title, this.dataset.skill, localDateString())) {
+        setLocalDataStatus("Recommended task added to today’s plan.");
+    }
+});
 
 function addTask() {
     const input = document.getElementById("taskInput");
     const taskText = input.value.trim();
-
     if (!taskText) {
-        alert("Please enter a study task.");
+        input.focus();
         return;
     }
-
-    taskCount++;
-
-    const task = document.createElement("div");
-    task.className = "task";
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.id = "task-" + taskCount;
-
-    const label = document.createElement("label");
-    label.htmlFor = checkbox.id;
-    label.textContent = taskText;
-
-    checkbox.addEventListener("change", updateProgress);
-
-    task.appendChild(checkbox);
-    task.appendChild(label);
-
-    document.getElementById("taskList").appendChild(task);
-
-    input.value = "";
-    updateProgress();
+    if (addStudentTask(taskText, "other", localDateString())) {
+        input.value = "";
+    }
 }
 
 function updateProgress() {
-    const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
-    const completed = document.querySelectorAll("#taskList input[type='checkbox']:checked");
-
-    // Divide completed tasks by all tasks; keep an empty planner at zero instead of dividing by zero.
-    const percentage = checkboxes.length
-        ? Math.round((completed.length / checkboxes.length) * 100)
-        : 0;
-
-    document.getElementById("progressFill").style.width = percentage + "%";
-    document.getElementById("progressText").textContent =
-        percentage + "% completed (" + completed.length + "/" + checkboxes.length + " tasks)";
+    renderStudentDashboard();
 }
+
+if (savedTasks.error || savedProjects.error) {
+    setLocalDataStatus(savedTasks.error || savedProjects.error);
+}
+renderStudentDashboard();
+renderPortfolio();
 </script>
 
 </body>

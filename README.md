@@ -2,6 +2,10 @@
 
 CarrierPath is a small career-guidance website with a Python standard-library backend and a SQLite database. The recommendations are generated from built-in guidance rules; this starter does not call an external AI service.
 
+The **Learn AI** section introduces AI and machine-learning concepts, beginner study advice, and CodeWithHarry and Apna College. It includes a 12-week AI and machine-learning roadmap. Its learning chat uses curated answers in the browser; it offers timestamped messages, suggested prompts, a typing indicator, and a clear-chat control, but it is not ChatGPT or a generative AI model. It does not call an AI provider or send or save chat messages.
+
+The student dashboard, study tasks and deadlines, practice quiz, and project portfolio work in the browser and save data to that browser's local storage. This information stays on the current device/browser and is not synced to an account or the website server; clearing browser storage removes it. The dashboard suggests Python practice after Python basics, then data foundations before machine learning. Do not save sensitive personal information or private project data.
+
 ## Run locally
 
 1. Install Python 3.10 or newer.
