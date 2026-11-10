@@ -1668,6 +1668,17 @@ footer p {
         </div>
         <p id="progressText">0% completed</p>
         <div id="taskList"></div>
+        <div class="card focus-timer" style="margin-top:24px">
+            <h3 data-en="Focus timer" data-hi="फोकस टाइमर">⏱️ Focus timer</h3>
+            <p data-en="Focus for 25 minutes, then take a short break." data-hi="25 मिनट ध्यान से पढ़ें, फिर छोटा ब्रेक लें।">Focus for 25 minutes, then take a short break.</p>
+            <p id="focusTimerReadout" role="timer" aria-label="25 minutes remaining" style="margin:18px 0;color:var(--primary);font-size:clamp(2.5rem,12vw,4rem);font-variant-numeric:tabular-nums;font-weight:bold;text-align:center">25:00</p>
+            <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <button id="focusTimerStart" type="button" data-en="Start" data-hi="शुरू करें">Start</button>
+                <button id="focusTimerPause" type="button" disabled data-en="Pause" data-hi="रोकें">Pause</button>
+                <button id="focusTimerReset" type="button" style="background:#725967" data-en="Reset" data-hi="रीसेट करें">Reset</button>
+            </div>
+            <p id="focusTimerStatus" role="status" aria-live="polite" data-en="Ready to focus." data-hi="ध्यान लगाने के लिए तैयार।">Ready to focus.</p>
+        </div>
 
         <div class="card reminder-panel">
             <h3 data-en="🔔 Daily study reminder"
@@ -2254,6 +2265,7 @@ function toggleLanguage() {
         currentLanguage === "en" ? "हिंदी" : "English";
 
     document.documentElement.lang = currentLanguage;
+    renderFocusTimer();
     refreshReminderStatus();
 }
 
@@ -3372,13 +3384,13 @@ function updateProgress() {
     renderStudentDashboard();
 }
 
-<<<<<<< HEAD
+
 if (savedTasks.error || savedProjects.error) {
     setLocalDataStatus(savedTasks.error || savedProjects.error);
 }
 renderStudentDashboard();
 renderPortfolio();
-=======
+
 let reminderState = "off";
 let reminderError = "";
 let reminderTimeText = "";
@@ -3579,7 +3591,74 @@ document.getElementById("disableStudyReminder").addEventListener(
     disableStudyReminder
 );
 initializeStudyReminder();
->>>>>>> 8d280188c92615d6a2732aa526bac79c7fa573a3
+    const FOCUS_TIMER_DURATION_SECONDS = 25 * 60;
+    let focusTimerRemainingSeconds = FOCUS_TIMER_DURATION_SECONDS;
+    let focusTimerEndsAt = null;
+    let focusTimerInterval = null;
+    let focusTimerState = "ready";
+
+    const focusTimerMessages = {
+            ready: { en: "Ready to focus.", hi: "ध्यान लगाने के लिए तैयार।" },
+            running: { en: "Focus session in progress.", hi: "पढ़ाई का सत्र चल रहा है।" },
+            paused: { en: "Timer paused.", hi: "टाइमर रुका हुआ है।" },
+            complete: { en: "Focus session complete. Take a short break!", hi: "पढ़ाई का सत्र पूरा हुआ। छोटा ब्रेक लें!" }
+                };
+
+    function renderFocusTimer() {
+            if (focusTimerState === "running") {
+                        focusTimerRemainingSeconds = Math.max(0, Math.ceil((focusTimerEndsAt - Date.now()) / 1000));
+                        if (focusTimerRemainingSeconds === 0) {
+                                        window.clearInterval(focusTimerInterval);
+                                        focusTimerInterval = null;
+                                        focusTimerEndsAt = null;
+                                        focusTimerState = "complete";
+                        }
+            }
+            const minutes = Math.floor(focusTimerRemainingSeconds / 60);
+            const seconds = focusTimerRemainingSeconds % 60;
+            const time = String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+            const readout = document.getElementById("focusTimerReadout");
+            readout.textContent = time;
+            readout.setAttribute("aria-label", minutes + " minutes and " + seconds + " seconds remaining");
+            document.getElementById("focusTimerStatus").textContent = focusTimerMessages[focusTimerState][currentLanguage];
+            document.getElementById("focusTimerStart").disabled = focusTimerState === "running";
+            document.getElementById("focusTimerPause").disabled = focusTimerState !== "running";
+    }
+
+    function startFocusTimer() {
+            if (focusTimerState === "running") return;
+            if (focusTimerRemainingSeconds === 0) focusTimerRemainingSeconds = FOCUS_TIMER_DURATION_SECONDS;
+            focusTimerState = "running";
+            focusTimerEndsAt = Date.now() + focusTimerRemainingSeconds * 1000;
+            focusTimerInterval = window.setInterval(renderFocusTimer, 1000);
+            renderFocusTimer();
+    }
+
+    function pauseFocusTimer() {
+            if (focusTimerState !== "running") return;
+            renderFocusTimer();
+            if (focusTimerState !== "running") return;
+            window.clearInterval(focusTimerInterval);
+            focusTimerInterval = null;
+            focusTimerEndsAt = null;
+            focusTimerState = "paused";
+            renderFocusTimer();
+    }
+
+    function resetFocusTimer() {
+            window.clearInterval(focusTimerInterval);
+            focusTimerInterval = null;
+            focusTimerEndsAt = null;
+            focusTimerRemainingSeconds = FOCUS_TIMER_DURATION_SECONDS;
+            focusTimerState = "ready";
+            renderFocusTimer();
+    }
+
+    document.getElementById("focusTimerStart").addEventListener("click", startFocusTimer);
+    document.getElementById("focusTimerPause").addEventListener("click", pauseFocusTimer);
+    document.getElementById("focusTimerReset").addEventListener("click", resetFocusTimer);
+    renderFocusTimer();
+
 </script>
 
 </body>
